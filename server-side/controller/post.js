@@ -52,6 +52,10 @@ export const getAllFeeds = async(req,res)=>{
         const posts = await Post.find()
         .populate({path: 'postPicturePath'})
         .populate({
+            path: 'userId',
+            select: 'userPic'
+        })
+        .populate({
                 path: 'comments.userId',
                 select: 'firstname lastname userPic _id'
         });
@@ -65,7 +69,19 @@ export const getAllFeeds = async(req,res)=>{
 export const getUserPosts = async(req,res)=>{
     try{
         const userId = req.params.userId;
-        const userPosts = await Post.find(userId).populate('postPicturePath comments.userId');
+        const id = new mongoose.Types.ObjectId(userId)
+        console.log(id)
+        const userPosts = await Post.find({userId:id})  
+        .populate({path: 'postPicturePath'})
+        .populate({
+            path: 'userId',
+            select: 'firstname lastname location occupation userPic'
+        })
+        .populate({
+                path: 'comments.userId',
+                select: 'firstname lastname userPic _id'
+        });
+        console.log(userPosts)
         res.status(200).json(userPosts);
     }catch(err){
         res.status(404).json({message:err.message})
@@ -83,6 +99,10 @@ export const postLike = async(req,res)=>{
 
         const post = await Post.findById(id)
         .populate({path: 'postPicturePath'})
+        .populate({
+            path: 'userId',
+            select: 'userPic'
+        })
         .populate({
                 path: 'comments.userId',
                 select: 'firstname lastname userPic _id'
@@ -125,6 +145,10 @@ export const pushComment = async(req,res)=>{
                             {$push:{comments:newComment}},
                             { new: true, useFindAndModify: false } // new returns updated data
                     ).populate({path: 'postPicturePath'})
+                    .populate({
+                        path: 'userId',
+                        select: 'userPic'
+                    })
                      .populate({
                              path: 'comments.userId',
                              select: 'firstname lastname userPic _id'
@@ -145,6 +169,10 @@ export const deleteComment = async(req,res)=>{
                             {$pull:{comments:{ _id: commId }}},
                             { new: true} // new returns updated data
                         ).populate({path: 'postPicturePath'})
+                        .populate({
+                            path: 'userId',
+                            select: 'userPic'
+                        })
                         .populate({
                                 path: 'comments.userId',
                                 select: 'firstname lastname userPic _id'

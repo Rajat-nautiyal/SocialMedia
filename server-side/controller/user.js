@@ -2,6 +2,7 @@ import Post from '../models/post.js';
 import User from "../models/user.js";
 import { gfs, gridfsBucket} from '../db/connectToMongo.js'
 import GridFsFile from '../models/gridfs.js';
+import mongoose from 'mongoose';
 
 export const getUsers = async(req,res)=>{
     try{
@@ -14,7 +15,8 @@ export const getUsers = async(req,res)=>{
 export const getUserFriends = async(req,res)=>{
     try{
         const userId = req.params.id
-        const user = await User.findById(userId,{password : 0, email:0});
+        const user = await User.findById(userId,{password : 0, email:0})
+                   
         const friends = await Promise.all(
             user.friends.map((id)=>User.findById(id))
         );
@@ -32,6 +34,10 @@ export const getUserFriends = async(req,res)=>{
 export const addRemoveFriend =async(req,res)=>{
     try{
         const {id, friendId} = req.params;
+        console.log(id)
+        console.log(friendId)
+        if(id === friendId) return;
+        
         const user = await User.findById(id);
         let friend = await User.findById(friendId);
 

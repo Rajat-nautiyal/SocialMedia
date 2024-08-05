@@ -1,0 +1,33 @@
+GET http://localhost:6001/
+
+###
+POST http://localhost:6001/post
+Content-Type: application/json
+
+{
+    "userName": "usos",
+    "test_success": "truly works"
+}
+
+###
+POST http://localhost:6001/auth/login
+Content-Type: application/json
+
+{
+    "email": "w@gmail.com",
+    "password": "123456"
+}
+
+###
+POST http://localhost:6001/auth/register
+Content-Type: application/json
+
+{
+    "firstname": "monkey",
+    "lastname": "Nautiyal",
+    "email": "w@gmail.com",
+    "password": "123456",
+    "userPic": "photo_string1",
+    "location": "delhi",
+    "occupation": "engineer"
+}
