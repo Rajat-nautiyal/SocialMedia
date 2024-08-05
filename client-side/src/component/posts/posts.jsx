@@ -29,7 +29,7 @@ export const Posts = () => {
     getPosts()
   },[])
   return (
-    <div>
+    <div className='w-full my-4'>
       <Story/>
       <CreatePost/>
       {posts.length > 0 ? (

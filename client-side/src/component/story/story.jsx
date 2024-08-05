@@ -1,7 +1,10 @@
 import React from 'react'
-
+import { CreateStory } from './createStory'
 export const Story = () => {
   return (
-    <div>story</div>
+    <div className='w-full bg-blue-300'>
+      <CreateStory/>
+      story
+    </div>
   )
 }

@@ -66,7 +66,12 @@ export const Comment = ({post}) => {
       <div>
           {isClicked ? (
               <>
-                  <FaRegCommentDots onClick={OnClickCommentTag} /> {countComment}
+                <div className='flex text-[26px] ml-[50px] text-gray-500'> 
+                    <FaRegCommentDots onClick={OnClickCommentTag} /> 
+                    <div className='text-[18px] px-[10px] font-medium'>
+                      {countComment}
+                    </div>
+                </div>
               </>
           ) : (
               <>

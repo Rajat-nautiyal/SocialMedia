@@ -6,24 +6,43 @@ import { Messages } from '../../pages/messages/messages.jsx'
 import {  useNavigate } from 'react-router-dom';
 import { RiHome2Line } from "react-icons/ri";
 import { FaUsers } from "react-icons/fa6";
+import { useDispatch, useSelector } from 'react-redux'
+import { setPage } from '../../state/index.jsx'
+import { AiOutlineMessage } from "react-icons/ai";
+import { MdOutlineNotificationsActive } from "react-icons/md";
 
-export const Navbar = () => {
+export const Navbar = ({ setHomePage, setUsersPage, setMessagePage }) => {
   const navigate = useNavigate();
-  const handleClick =()=>{
-    navigate('/')
-  }
-  // const handleClickUsers =()=>{
-  //   navigate('/users')
-  // }
+  const dispatch = useDispatch();
+  const page = useSelector((state)=>state.userSlice.page)
+
+  const handleClickHome = () => {
+    setHomePage(true);
+    setUsersPage(false);
+    setMessagePage(false);
+  };
+
+  const handleClickUsers = () => {
+    setHomePage(false);
+    setUsersPage(true);
+    setMessagePage(false);
+  };
+
+  const handleClickMessages = () => {
+    // setHomePage(false);
+    // setUsersPage(false);
+    setMessagePage(true);
+  };
 
   return (
     <>
-    <div className='flex items-center'>
-      <div onClick={handleClick}><RiHome2Line/></div>
-      <div ><Users/></div>
-      <div><Notify/></div>
-      <div><Messages/></div>
+    <div className='flex justify-around w-[100%]'>
+      <div onClick={handleClickHome}><RiHome2Line /></div>
+      <div onClick={handleClickUsers}><FaUsers /></div>
+      <div onClick={handleClickMessages}><MdOutlineNotificationsActive/></div>
+      <div onClick={handleClickMessages}><AiOutlineMessage/></div>
     </div>
+
     </>
   )
 }

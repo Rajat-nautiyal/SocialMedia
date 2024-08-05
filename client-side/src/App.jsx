@@ -8,8 +8,8 @@ import { Profile } from './component/profile.jsx';
 import {useSelector} from 'react-redux'
 
 function App(){
-  // const isAuth = Boolean(useSelector((state) => state.userSlice.token));
-  const isAuth = true
+  const isAuth = Boolean(useSelector((state) => state.userSlice.token));
+  // const isAuth = true
   // console.log(isAuth)
   return (
     <>

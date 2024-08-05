@@ -1,0 +1,38 @@
+body{
+    @apply bg-gray-200
+}
+.top-header {
+    @apply flex flex-row justify-between text-[23px] w-full bg-white
+    shadow sticky top-0
+  }
+.navHeader{
+    @apply flex items-center absolute top-[11.5px] left-[35%] w-[50%];
+}
+.nameNsearch{
+    @apply flex flex-row items-center space-x-4;
+}
+.mainPage{
+    @apply flex flex-row w-full;
+}
+.btn {
+    @apply bg-blue-500 text-white font-bold py-3 px-4 rounded-3xl
+    hover:cursor-pointer hover:bg-blue-600
+}
+.postInput{
+    @apply w-[70%] rounded-xl pl-[4px] py-[7px] border-[1.5px] focus:outline-blue-200
+    hover:cursor-pointer hover:bg-gray-300 focus:bg-gray-300
+}
+.profile-pic{
+    @apply w-[53px] h-[48px] object-cover rounded-[50%];
+}
+.post-profile-pic{
+    @apply w-[42px] h-[41px] object-cover rounded-[50%];
+}
+
+.createPostIcon{
+    @apply flex items-center font-medium hover:cursor-pointer hover:bg-gray-300
+     text-gray-600 w-[30%] py-1 rounded-lg mt-1
+}
+.postPic{
+    @apply w-[95%] h-[60vh] rounded mx-auto;
+}
