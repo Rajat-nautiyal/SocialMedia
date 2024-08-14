@@ -16,14 +16,14 @@ const messageSchema = new mongoose.Schema(
 			type: String,
 			required: true,
 		},
+		read:{
+			type:Boolean,
+			default:false
+		},
         file:{
 			type: mongoose.Schema.Types.ObjectId,
 			ref: "uploads.files",
             default:null   
-        },
-        createdAt: {
-                type: Date,
-                default: Date.now,
         },
 	},
 	{ timestamps: true }

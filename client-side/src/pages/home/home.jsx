@@ -1,68 +1,59 @@
-import React,{useState}from 'react'
+import React,{useState, useEffect}from 'react'
 import { useMediaQuery } from '@react-hook/media-query';
-import {Search} from '../../component/search.jsx'
-import {Profile} from '../../component/profile.jsx'
+import {Search} from '../../component/search.jsx';
+import {Profile} from '../../component/profile.jsx';
 import {Posts} from '../../component/posts/posts.jsx'
 import {Friends} from '../../component/friends.jsx'
 import {Navbar} from '../../component/navbar/navbar.jsx'
-import {Messages} from '../messages/messages.jsx'
-import { IoLogoGithub } from "react-icons/io";
-import { MdDarkMode } from "react-icons/md";
-import { MdLightMode } from "react-icons/md";
-import { IoIosLogOut } from "react-icons/io";
-import { IoShareSocialOutline } from "react-icons/io5";
-import './home.css'
+import {ChatUsers} from '../messages/messages.jsx'
+import {Notify} from '../notify/notify.jsx'
+import './home.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { Users } from '../users/users.jsx';
-import { useParams } from 'react-router-dom';
+import { socketHook } from '../../hooks/socketHook.jsx';
+import {setOnlineUsers} from '../../state/index.jsx';
+import {NotifyHook} from '../../hooks/notifyHook.jsx';
 
 export const Home = () => {
   const isMobile = useMediaQuery('(max-width: 768px)');
-  const [homePage, setHomePage] = useState(true);
-  const [usersPage, setUsersPage] = useState(false);
-  const [messagePage, setMessagePage] = useState(false);
-
-  // const params = useParams();
-  // if(params=='/profile/:id'){
-  //   setUsersPage()
-  // }
-
-  const dispatch = useDispatch();
-  // const page = useSelector((state)=>state.userSlice.page)
+  // const userId = useSelector((state)=>state.userSlice.user._id);
   const mode = useSelector((state)=>state.userSlice.mode)
+  const messagePageBool = useSelector((state)=>state.userSlice.messagePageBool);
+  const notifyPageBool = useSelector((state)=>state.userSlice.notifyPageBool);
+  const dispatch = useDispatch();
+  const socket = socketHook();
+  const getNotify = NotifyHook();
+
+  useEffect(()=>{
+    socket.on('onlineUsers',(onlineUsers)=>{
+      dispatch(setOnlineUsers(onlineUsers))
+    })
+    return ()=>{
+      socket.disconnect()
+    }
+  },[])
+  useEffect(()=>{
+    getNotify()
+  },[])
 
   return (
     <>
     {!isMobile?(<>
-      <div className='top-header'>
-        <div className='flex flex-row w-9/12'>
-          <div className='nameNsearch'>
-            <div className='flex flex-row text-[30px] items-center'>
-              <IoShareSocialOutline/>SocialEra
-            </div>
-            <div className='text-[18px]'><Search/></div>
-          </div>
-          <div className='navHeader'>
-            <Navbar setHomePage={setHomePage} setUsersPage={setUsersPage} setMessagePage={setMessagePage}/>
-          </div>
-        </div>
-        <div className='flex flex-row items-center w-[20%] justify-around'>
-          <div>{mode==='light'?<MdLightMode/>:<MdDarkMode/>}</div>
-          <div><IoIosLogOut/></div>
-          <div><IoLogoGithub/></div>
-        </div>
-      </div>
-      <div className='mainPage'>
+        <Navbar/>
+      <div className='mainPage' id={mode?'darkMainPage':''}>
         <Profile className='w-[30%]'/>
-        {homePage ? (
           <Posts className='w-[40%]'/>
-        ) : usersPage ? (
-        <Users className='w-[40%]'/>
-        ) : null}
         <Friends className='w-[30%]'/>
-        <div className='w-[30%]' style={messagePage ? { color: 'black' }: { display: 'none' } }>
-          <Messages className='w-[100%]'/>
-        </div>
+        {messagePageBool?
+        <div className='w-[30%] h-[90%] left-[66%] absolute 
+        rounded-xl shadow-lg bg-purple-300'>
+          <ChatUsers className='w-[100%]' />
+        </div>:null}
+        {notifyPageBool?
+        <div className='w-[30%] h-[90%] left-[66%] absolute 
+          rounded-xl shadow-lg bg-purple-300'>
+          <Notify className='w-[100%]' />
+        </div>:null}
+
       </div>
       </> ):(
       <>
@@ -79,7 +70,7 @@ export const Home = () => {
         </div>
         <Profile/>
         <Posts/>
-        <Friends/>:<Messages/>
+        <Friends/>:<ChatUsers/>
         </>)
     } 
     </>

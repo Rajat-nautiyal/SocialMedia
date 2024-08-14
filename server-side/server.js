@@ -12,6 +12,7 @@ import userRoutes from './routes/user.js';
 import messageRoutes from './routes/message.js'
 import authRoutes from './routes/auth.js';
 import postRoutes from './routes/post.js'
+import notifyRoutes from './routes/notify.js';
 import authUser from './middleware/authorization.js';
 import {createPost,createStory} from './controller/post.js'
 import {connectToDb, gfs ,storage} from './db/connectToMongo.js'
@@ -46,9 +47,10 @@ connectToDb();
 const upload = multer({ storage });
 setSocketIo(io);
 app.use('/users', userRoutes); // routes for users(add/remove friends , get all users)
-app.use('/message', messageRoutes);// get/send messages
+app.use('/message', messageRoutes);// get messages
 app.use('/auth', authRoutes);   //authentications
 app.use('/post', postRoutes);   //posts activities(create, like, comment, get posts)
+app.use('/notify', notifyRoutes);// get messages
 
 //stream files
 app.get('/stream/:filename',streamFile)

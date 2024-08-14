@@ -1,73 +1,40 @@
-import React, { useState, useEffect } from 'react';
-import { FaUsers } from 'react-icons/fa6';
-import { useSelector,useDispatch } from 'react-redux';
-import {setProfileUser} from '../../state/index.jsx'
-import { useNavigate } from 'react-router-dom';
-import { setPosts } from '../../state/index.jsx';
+import React,{useState}from 'react'
+import  {UsersFunc} from '../../component/users.jsx'
+import { useMediaQuery } from '@react-hook/media-query';
+import {Navbar} from '../../component/navbar/navbar.jsx'
+import {Profile} from '../../component/profile.jsx'
+import {Friends} from '../../component/friends.jsx'
+import {ChatUsers} from '../messages/messages.jsx'
+import {Notify} from '../notify/notify.jsx'
+
+import { useDispatch, useSelector } from 'react-redux';
 
 export const Users = () => {
-  const [users, setUsers] = useState([]);
-  const page = useSelector((state) => state.userSlice.page);
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-
-   const getUserpost = async(user)=>{
-    try{
-      dispatch(setProfileUser(user))
-      // console.log(user)
-      const res = await fetch(`http://localhost:6001/post/${user._id}`,{
-        method: 'GET',
-        headers:{
-          'content-type':'application/json'
-        },
-      })
-      const data = await res.json() 
-      dispatch(setPosts({posts:data}))
-      navigate(`/profile/${user._id}`)
-      // setUser(data)
-      console.log(data)
-    } catch(e){
-        console.log(e.message)
-    }
-  }
-  
-  
-  const getUsers = async () => {
-    try {
-      const res = await fetch('http://localhost:6001/users', {
-        method: 'GET',
-        headers: {
-          'content-type': 'application/json',
-        },
-      });
-      const data = await res.json();
-      setUsers(data);
-      console.log(data);
-    } catch (e) {
-      console.log(e.message);
-    }
-  };
-
-  useEffect(() => {
-    getUsers();
-  }, []);
-
-  const handleUserClick = (user) => {
-    setSelectedUser(user);
-  };
+    const isMobile = useMediaQuery('(max-width: 768px)');
+    const messagePageBool = useSelector((state)=>state.userSlice.messagePageBool);
+    const notifyPageBool = useSelector((state)=>state.userSlice.notifyPageBool);
+    const mode = useSelector((state)=>state.userSlice.mode)
 
   return (
-    <div className='w-[100%]'>
-      <h2>People you may know</h2>
-      {users.map((user) => (
-        <div key={user._id} onClick={() => getUserpost(user)}>
-          <div className='h-[150px]'>
-            <img className='h-[150px]' src={`http://localhost:6001/streamId/${user.userPic}`} alt={`${user.firstname} ${user.lastname}`} />
-          </div>
-          <div>{user.firstname} {user.lastname}</div>
-          <div>{user.location}</div>
-        </div>
-      ))}
-    </div>
-  );
-};
+    <>
+        <Navbar/>
+      <div className='mainPage' id={mode?'darkMainPage':''}>
+        <div className='w-[30%]'><Profile /></div>
+        <div className='w-[70%] '><UsersFunc /></div>
+       
+        {messagePageBool?
+        <div className='w-[30%] h-[90%] left-[66%] absolute 
+        rounded-xl shadow-lg bg-purple-300'>
+          <ChatUsers className='w-[100%]' />
+        </div>:null}
+        {notifyPageBool?
+        <div className='w-[30%] h-[90%] left-[66%] absolute 
+          rounded-xl shadow-lg bg-purple-300'>
+          <Notify className='w-[100%]' />
+        </div>:null}
+
+      </div>
+    
+    </>  
+    )
+}

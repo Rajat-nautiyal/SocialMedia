@@ -1,18 +1,24 @@
+html{
+    @apply overflow-y-hidden
+}
 body{
-    @apply bg-gray-200
+    @apply bg-gray-200 h-screen w-screen overflow-hidden
+}
+#root{
+    @apply  h-full
 }
 .top-header {
-    @apply flex flex-row justify-between text-[23px] w-full bg-white
+    @apply flex flex-row justify-between text-[23px] w-full h-[8%] bg-white
     shadow sticky top-0
   }
 .navHeader{
-    @apply flex items-center absolute top-[11.5px] left-[35%] w-[50%];
+    @apply flex items-center relative inset-y-auto w-full overflow-y-hidden;
 }
 .nameNsearch{
     @apply flex flex-row items-center space-x-4;
 }
 .mainPage{
-    @apply flex flex-row w-full;
+    @apply flex flex-row w-full h-[92%] overflow-y-scroll;
 }
 .btn {
     @apply bg-blue-500 text-white font-bold py-3 px-4 rounded-3xl
@@ -20,12 +26,19 @@ body{
 }
 .postInput{
     @apply w-[70%] rounded-xl pl-[4px] py-[7px] border-[1.5px] focus:outline-blue-200
-    hover:cursor-pointer hover:bg-gray-300 focus:bg-gray-300
+    hover:cursor-pointer hover:bg-gray-200 focus:bg-gray-200
+}
+.messageInput{
+    @apply w-[80%] rounded-xl pl-[4px] py-[7px] focus:outline-gray-300
+    hover:cursor-pointer hover:bg-gray-200 focus:bg-gray-200 focus:outline-[1px]
 }
 .profile-pic{
     @apply w-[53px] h-[48px] object-cover rounded-[50%];
 }
 .post-profile-pic{
+    @apply w-[42px] h-[41px] object-cover rounded-[50%];
+}
+.comment-profile-pic{
     @apply w-[42px] h-[41px] object-cover rounded-[50%];
 }
 
@@ -34,5 +47,82 @@ body{
      text-gray-600 w-[30%] py-1 rounded-lg mt-1
 }
 .postPic{
-    @apply w-[95%] h-[60vh] rounded mx-auto;
+    @apply w-[95%] h-[68vh] rounded mx-auto;
 }
+.loadingBtn{
+    @apply animate-spin text-[25px] font-medium rounded-3xl text-white
+}
+.receiver {
+    @apply  bg-gray-200 text-gray-900 rounded-lg;
+  }
+.sender {
+    @apply  bg-blue-500 text-white rounded-lg;
+  }
+      
+#home{
+    @apply text-blue-500 border-b-[3px] border-blue-500 rounded-none hover:bg-white
+}
+#users{
+    @apply text-blue-500 border-b-[3px] border-blue-500 rounded-none hover:bg-white
+}
+#notify{
+    @apply text-blue-500 border-b-[3px] border-blue-500 rounded-none hover:bg-white
+}
+#chat{
+    @apply text-blue-500 border-b-[3px] border-blue-500 rounded-none hover:bg-white
+}
+
+#darkTopheader{
+    @apply bg-primary-dark text-white
+}
+#darkHome{
+    @apply  hover:bg-primary-dark border-b-[3px] border-blue-500 rounded-none
+}
+#darkUsers{
+    @apply  hover:bg-primary-dark border-b-[3px] border-blue-500 rounded-none
+}
+#darkNotify{
+    @apply  hover:bg-primary-dark border-b-[3px] border-blue-500 rounded-none
+}
+#darkChat{
+    @apply  hover:bg-primary-dark border-b-[3px] border-blue-500 rounded-none
+}
+#darkMainPage{
+    @apply  bg-secondary-darkThree
+}
+#darkPost{
+    @apply bg-[#63636e] text-white border-none outline-none
+}
+#darkFollow{
+    @apply text-[#c1c1c9]
+}
+#darkLike{
+    @apply text-white
+}
+#darkComment{
+    @apply text-white
+}
+#darkSearch{
+    @apply text-black
+}
+#darkNotifyTwo{
+    @apply bg-[#1e293b] text-white 
+
+}
+#darkNotifyThree{
+    @apply bg-[#1e293b] text-white rounded-none
+
+}
+.scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  
+  /* for Firefox */
+.scrollbar-hide {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+#darkChatBg{
+    @apply bg-[#1e293b]
+}
+  

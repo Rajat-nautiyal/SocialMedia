@@ -3,6 +3,7 @@ import User from "../models/user.js";
 import { gfs, gridfsBucket} from '../db/connectToMongo.js'
 import GridFsFile from '../models/gridfs.js'; //without it -> error occurs(grid uploads schema not defined)
 import mongoose from 'mongoose';
+import Notify from '../models/notify.js';
 
 export const createPost = async(req,res)=>{
     try{
@@ -19,7 +20,7 @@ export const createPost = async(req,res)=>{
             comments:[],
         });
         const savePost = await newPost.save();
-        res.status(201).json(savePost);
+        res.status(201).json({post:savePost});
     }catch(err){
         res.status(409).json({message:err.message})
     }
@@ -53,12 +54,12 @@ export const getAllFeeds = async(req,res)=>{
         .populate({path: 'postPicturePath'})
         .populate({
             path: 'userId',
-            select: 'userPic'
+            select: 'firstname lastname location occupation userPic'
         })
         .populate({
                 path: 'comments.userId',
                 select: 'firstname lastname userPic _id'
-        });
+        }).sort({ createdAt:-1 });
 
         res.status(200).json(posts);
        }catch(err){
@@ -69,9 +70,9 @@ export const getAllFeeds = async(req,res)=>{
 export const getUserPosts = async(req,res)=>{
     try{
         const userId = req.params.userId;
-        const id = new mongoose.Types.ObjectId(userId)
-        console.log(id)
-        const userPosts = await Post.find({userId:id})  
+        // const id = new mongoose.Types.ObjectId(userId)
+        console.log(userId)
+        const userPosts = await Post.find({userId:userId})  
         .populate({path: 'postPicturePath'})
         .populate({
             path: 'userId',
@@ -80,7 +81,7 @@ export const getUserPosts = async(req,res)=>{
         .populate({
                 path: 'comments.userId',
                 select: 'firstname lastname userPic _id'
-        });
+        }).sort({ createdAt: 1 });
         console.log(userPosts)
         res.status(200).json(userPosts);
     }catch(err){
@@ -106,11 +107,13 @@ export const postLike = async(req,res)=>{
         .populate({
                 path: 'comments.userId',
                 select: 'firstname lastname userPic _id'
-        });
+        }).sort({ createdAt: 1 });
 
         if (!post) {
             return res.status(404).json({ message: "Post not found" });
         }
+        // console.log(id)
+        // console.log(post._id)
 
         const isLiked = post.likes.get(userId);
         if(isLiked){
@@ -118,7 +121,17 @@ export const postLike = async(req,res)=>{
             await post.save();
             res.status(200).json({post:post});
         }else{
-            post.likes.set(userId,true)
+            post.likes.set(userId,true)        
+            const notification = await Notify.create({
+                        userId: post.userId._id,
+                        actionId:userId,
+                        postId:id,
+                        read:false,
+                        notification:`${user.firstname} ${user.lastname} has liked on your post`,
+                        actionPic:user.userPic
+            })
+            console.log(notification)
+            await notification.save();
             await post.save();
             res.status(200).json({message:`${user.firstname} liked your Post`,post});
         }
@@ -153,6 +166,16 @@ export const pushComment = async(req,res)=>{
                              path: 'comments.userId',
                              select: 'firstname lastname userPic _id'
                     });
+
+        const notification = await Notify.create({
+                        userId: post.userId._id,
+                        actionId:userId,
+                        postId:id,
+                        read:false,
+                        notification:`${user.firstname} ${user.lastname} added a comment on your post`,
+                        actionPic:user.userPic
+                    })
+        await notification.save();
         res.status(201).json({message:`${user.firstname} added a comment on your post`,post})
     }catch(err){
         res.status(404).json({message:err.message})

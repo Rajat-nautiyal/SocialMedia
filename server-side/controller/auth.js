@@ -1,6 +1,7 @@
 import jwt from 'jsonwebtoken'
 import bcrypt from 'bcrypt'
 import User from '../models/user.js'
+import Notify from '../models/notify.js'
 
 export const register = async(req,res) =>{
     try{
@@ -27,6 +28,32 @@ export const register = async(req,res) =>{
             occupation
         })
         const savedUser = await newUser.save();
+        const creatorPic ='66b475fb2fec1718a7d1de2d';
+        const welcome = 'Welcome to SocialEra, i hope your experience would be great with my website';
+        const specificNotify = await Notify.findOne({notification:welcome, userId:user._id});
+        let notification;
+        if(specificNotify){
+            await Notify.deleteOne({notification:welcome, userId:user._id});
+             notification = await Notify.create({
+                userId: savedUser._id,
+                actionId:null,
+                postId:null,
+                read:false,
+                notification:welcome,
+                actionPic:creatorPic,
+            })
+        }else{
+            notification = await Notify.create({
+                userId: savedUser._id,
+                actionId:null,
+                postId:null,
+                read:false,
+                notification:welcome,
+                actionPic:creatorPic,
+            })
+        }
+
+        await notification.save();
         res.status(201).json(savedUser);
     }
     catch(error){
@@ -49,6 +76,31 @@ export const login = async(req,res) =>{
             httpOnly: true,
             sameSite: 'strict'
         })
+        const creatorPic ='66b475fb2fec1718a7d1de2d';
+        const welcome = 'Welcome to SocialEra, i hope your experience would be great with my website';
+        const specificNotify = await Notify.findOne({notification:welcome, userId:user._id});
+        let notification;
+        if(specificNotify){
+            await Notify.deleteOne({notification:welcome, userId:user._id});
+             notification = await Notify.create({
+                userId: user._id,
+                actionId:null,
+                postId:null,
+                read:false,
+                notification:welcome,
+                actionPic:creatorPic,
+            })
+        }else{
+            notification = await Notify.create({
+                userId: user._id,
+                actionId:null,
+                postId:null,
+                read:false,
+                notification:welcome,
+                actionPic:creatorPic,
+            })
+        }
+        await notification.save();
         res.status(200).json({token, user});
     }catch(err){
         res.json({message:err.message});

@@ -25,6 +25,8 @@ export const Login = () => {
         dispatch(setLogin({
             user:logInData.user, token:logInData.token
         }))
+        localStorage.setItem('darkMode', JSON.stringify(false));
+        // dispatch(setMode(false))
         console.log('form data is', logInData);
     } catch (error) {
         console.error('Error submitting form:', error);

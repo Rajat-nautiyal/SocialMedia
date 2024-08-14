@@ -1,6 +1,8 @@
 export const setSocketIo =async(io)=>{
-  const onlineUsers = [];
 
+  const onlineUsers = [];
+  // console.log("User");
+  
   io.on("connection", (socket) => {
     const userId = socket.handshake.query.userId
     console.log("User Connected", socket.id);
@@ -10,12 +12,14 @@ export const setSocketIo =async(io)=>{
     }
       io.emit("onlineUsers", onlineUsers);
 
-    socket.on("message", ({ room, message }) => {
-      console.log({ room, message });
-      socket.join(room);
-      io.to(room).emit("receive-message", message);
+    socket.on("message", async({ room, chatUser }) => {
+      await socket.join(room); 
+      if(!chatUser) return;
+        console.log({ room, chatUser });
+        // console.log(chatUser)
+        socket.join(room);
+        io.to(room).emit("receive-message", chatUser);
     });
-  
     socket.on("disconnect", () => {
       const index = onlineUsers.indexOf(userId)
       if(index != -1){
