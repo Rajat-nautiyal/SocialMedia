@@ -4,18 +4,23 @@ import {getUserPost} from '../../hooks/getUserHook'
 import { BsChatLeftDots } from "react-icons/bs";
 import { MdOutlineMarkUnreadChatAlt } from "react-icons/md";
 import {Messages} from '../../component/messages.jsx'
+import { socketHook } from '../../hooks/socketHook.jsx';
+import NotifySound from "../../../public/assets/notification.mp3"
+import NotifySoundTwo from "../../../public/assets/tap-notification-180637.mp3"
 
 export const ChatUsers = () => {
   const [friend, setFriend] = useState(null)
   const [lastMessage, setLastMessage] = useState(null)
+  const [newMessage, setNewMessage] = useState(null)
 
   const originalfriends = useSelector((state)=>state.userSlice.originalfriends);
   const user = useSelector((state)=>state.userSlice.user);
+  const messagePageBool = useSelector((state)=>state.userSlice.messagePageBool);
   const mode = useSelector((state)=>state.userSlice.mode);
   const userId = useSelector((state)=>state.userSlice.user._id);
   const onlineUsers = useSelector((state)=>state.userSlice.onlineUsers);
-  const socketLastMessage = useSelector((state)=>state.userSlice.socketLastMessage);
-
+  // const socketLastMessage = useSelector((state)=>state.userSlice.socketLastMessage);
+  const socket = socketHook();
   const handleClick =()=>{
     setFriend(null)
   }
@@ -29,16 +34,34 @@ export const ChatUsers = () => {
         },
       });
       const data = await res.json();
-      console.log(data);
+      // console.log(data);
       setLastMessage(data)
     } catch (e) {
       console.log(e.message);
     }
   };
+  useEffect(() => {
+    socket.on("new-message", (data) => {
+      if (data.message && data.senderId) {
+        setNewMessage(data);
+        // console.log(data.senderId)
+        if (data.receiverId === userId||data.senderId === userId) {
+          if(data.receiverId === userId){
+            const sound = new Audio(NotifySoundTwo);
+            sound.play();
+          }          
+        }
+      }
+    });
+      return () => {
+      socket.disconnect();
+    };
+  }, [socket]);
+
 
   useEffect(() => {
     getLastMessages();
-  }, []);
+  }, [friend,messagePageBool]);
 
   return (
     <div className='w-full bg-[#606060] overflow-y-auto h-full rounded-xl p-4' id={mode?'darkChatBg':''}>
@@ -98,14 +121,22 @@ export const ChatUsers = () => {
                 <div className="text-[18px] font-semibold">
                   {u.firstname} {u.lastname}
                 </div>
-                <div className="text-[15px] text-gray-600">{socketLastMessage.senderId&&socketLastMessage.senderId===u._id?socketLastMessage.message:message.message}</div>
+                <div className="text-[15px] text-gray-600">
+                  {
+                  newMessage&&newMessage.senderId===u._id&&newMessage.receiverId===userId?
+                  newMessage.message:message.message
+                }
+                </div>
               </div>
               <div>
-                {socketLastMessage.senderId ? (
-                  <BsChatLeftDots className="text-[23px] text-blue-500" />
-                ) : (
+                {newMessage&&newMessage.senderId===u._id? (
                   <MdOutlineMarkUnreadChatAlt className="text-[23px] text-red-500" />
-                )}
+                ) : message.read? (
+                  <BsChatLeftDots className="text-[23px] text-blue-500" />
+                ): message.senderId===userId?                  
+                <BsChatLeftDots className="text-[23px] text-blue-500" />
+                :<MdOutlineMarkUnreadChatAlt className="text-[23px] text-red-500" />
+                }
               </div>
             </div>
           );

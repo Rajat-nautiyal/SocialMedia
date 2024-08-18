@@ -23,6 +23,16 @@ export default {
             customYellow: '#ecc94b',
             darkGrey:'#292A2D'
           }, 
+          keyframes: {
+            slide: {
+              '0%': { transform: 'translateX(0%)' },
+              '100%': { transform: 'translateX(100%)' },
+            },
+          },
+          animation: {
+            slide: 'slide 5s linear 1',
+          },
+    
     },
   },
   plugins: [],

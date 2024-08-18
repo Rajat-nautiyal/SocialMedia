@@ -26,30 +26,8 @@ export const createPost = async(req,res)=>{
     }
 }
 
-export const createStory = async(req,res)=>{
-    try{
-        const {userId, postPicturePath, description} = req.body;
-        const user = await User.findOne(userId);
-        const pictureId = req.file? req.file.id: null;
-
-        const newPost = new Post({
-            userId:userId,
-            fullname: user.firstname + user.lastname,
-            story: true,
-            postPicturePath: pictureId,
-            description:description,
-            likes:null,
-            comments:[]
-        });
-        const savePost = await newPost.save();
-        res.status(201).json(savePost);
-    }catch(err){
-        res.status(409).json({message:err.message})
-    }
-}
 export const getAllFeeds = async(req,res)=>{
     try{
-        // const posts = await Post.find().populate('postPicturePath comments.userId');
         const posts = await Post.find()
         .populate({path: 'postPicturePath'})
         .populate({

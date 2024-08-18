@@ -33,7 +33,7 @@ export const Search = () => {
   };
   return (
     <div className='w-[250px]'>
-    <div className="relative w-[200px] transition-all duration-300 focus-within:w-[250px]"
+    <div className="relative w-[200px] transition-all duration-300 focus-within:w-[220px]"
       id={mode?'darkSearch':''}>
       <div className="absolute inset-y-0 left-0 pl-3 flex items-center text-gray-500">
         <CiSearch className='text-[22px]'/>
@@ -44,8 +44,8 @@ export const Search = () => {
         value={inputValue}
         onChange={(e) => setInputValue(e.target.value)}
         className="w-full border-[1.5px] border-gray-400 hover:border-blue-300 
-          focus:w-[250px] transition-all duration-300 focus:outline-blue-400 
-          focus:border-[1px] rounded-full py-[3px] pl-10"
+          focus:w-[220px] transition-all duration-300 focus:outline-blue-400 bg-gray-100
+          focus:border-none rounded-full py-[3px] pl-10 placeholder:text-[16px] focus:bg-gray-300"
         placeholder="Search friends"
       />
     </div>

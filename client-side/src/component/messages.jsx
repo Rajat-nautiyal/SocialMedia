@@ -6,10 +6,12 @@ import { socketHook } from '../hooks/socketHook.jsx';
 import { MdOnlinePrediction } from "react-icons/md";
 import { useDispatch } from 'react-redux';
 import { setSocketLastMessage } from '../state/index.jsx';
+import {FormatTime} from "../utils/formatDate.js"
 
 export const Messages = ({ friend, handleClick }) => {
   const [message, setMessage] = useState('');
   const [chats, setChats] = useState([]);
+  const [bool, setBool] = useState(false);
   const socket = socketHook();
   const onlineUsers = useSelector((state) => state.userSlice.onlineUsers);
   const dispatch = useDispatch();
@@ -17,6 +19,17 @@ export const Messages = ({ friend, handleClick }) => {
   const userId = useSelector((state) => state.userSlice.user._id);
   const room = [userId, friend._id].sort().join('_');
   const chatUser ={}
+  const element = document.getElementById('chats');
+
+  const smoothScroll =()=>{
+    setTimeout(()=>{
+      element.scrollTo({
+        top: element.scrollHeight,
+        behavior: 'smooth'
+      });
+    },100)
+  }
+
   const sendMessages = async () => {
     try {
       const res = await fetch(`http://localhost:6001/message/send/${friend._id}`, {
@@ -26,9 +39,11 @@ export const Messages = ({ friend, handleClick }) => {
         },
         body: JSON.stringify({ message, userId })
       });
-      const data = await res.json();
-      console.log(data);
+      // const data = await res.json();
+      // console.log(data);
+      smoothScroll()
       setMessage(''); //clear input
+  
     } catch (e) {
       console.log(e.message);
     }
@@ -38,6 +53,8 @@ export const Messages = ({ friend, handleClick }) => {
     const chatUser = {
       senderId: userId,
       message,
+      receiverId:friend._id,
+      createdAt:new Date()
     };
     socket.emit("message", { room, chatUser });
     setMessage(''); //clear input
@@ -61,7 +78,8 @@ export const Messages = ({ friend, handleClick }) => {
   useEffect(() => {
     socket.on("receive-message", (data) => {
       setChats((prevMessages) => Array.isArray(prevMessages) ? [...prevMessages, data] : [data]);
-      console.log(data)
+      console.log(data);
+      smoothScroll();
       if(data.message&&data.senderId){
         dispatch(setSocketLastMessage(data))
       }
@@ -76,6 +94,17 @@ export const Messages = ({ friend, handleClick }) => {
     getMessages();
   }, [friend._id]);
 
+  const scroll =()=>{
+    setTimeout(()=>{
+      const element = document.getElementById('chats');
+      element.scrollTop = element.scrollHeight; // Scroll to the bottom(without scroll behaviour)
+      setBool(true)
+    },400)
+  }
+  useEffect(() => {
+    scroll()
+  }, []);
+  
   return (
     <div className="p-4 h-full bg-white rounded-lg flex flex-col justify-between">
       {/* Header for name img and online status*/}
@@ -99,18 +128,20 @@ export const Messages = ({ friend, handleClick }) => {
       </div>
 
       {/* Chat Messages(sender N receiver)*/}
-      <div className="flex-grow overflow-y-auto mb-4 space-y-4">
+      <div className="flex-grow overflow-y-auto scrollbar-hide mb-4 space-y-4" id="chats">
         {chats && chats.map((m, index) => (
           m.message ?
-            <div key={index} className={`flex items-start space-x-2 ${m.senderId === userId ? 'justify-end' : 'justify-start'}`}>
-              <img
+            <div key={index} className={`flex items-start  space-x-2 ${m.senderId === userId ? 'justify-end' : 'justify-start'}`}>
+              {bool?<img
                 src={m.senderId === userId ? `http://localhost:6001/streamId/${user.userPic}` : `http://localhost:6001/streamId/${friend.userPic}`}
                 className="h-[38px] w-[38px] rounded-full object-cover"
                 alt="User"
-              />
-              <div className={`${m.senderId === userId ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-900'} p-3 rounded-lg max-w-[70%] break-words`}>
+              />:null}
+              <div className={`${m.senderId === userId ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-900'} 
+                p-3 rounded-lg max-w-[70%] break-words`} id={bool?null:'chatLoad'}>
                 <div className="text-[16px] font-semibold">{m.senderId === userId ? 'You' : `${friend.firstname} ${friend.lastname}`}</div>
-                <div className="text-[14px]">{m.message}</div>
+                <div className="text-[15px]">{m.message}</div>
+                <div className="text-[12px]">{FormatTime(new Date(m.createdAt))}</div>
               </div>
             </div> : null
         ))}

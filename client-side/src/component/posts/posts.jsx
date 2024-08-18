@@ -28,7 +28,7 @@ export const Posts = () => {
         },
       })
       const data = await res.json()
-      console.log(data)
+      // console.log(data)
       dispatch(setPosts({posts:data}))
 
     } catch(e){

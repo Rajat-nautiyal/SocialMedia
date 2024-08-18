@@ -1,11 +1,11 @@
 html{
-    @apply overflow-y-hidden
+    @apply overflow-y-hidden 
 }
 body{
     @apply bg-gray-200 h-screen w-screen overflow-hidden
 }
 #root{
-    @apply  h-full
+    @apply  h-full m-0
 }
 .top-header {
     @apply flex flex-row justify-between text-[23px] w-full h-[8%] bg-white
@@ -126,3 +126,6 @@ body{
     @apply bg-[#1e293b]
 }
   
+#chatLoad{
+    @apply bg-white text-white
+}

@@ -42,13 +42,13 @@ export const Post = ({post}) => {
 
   return (
     <div id={mode?'darkPost':''}
-      className='w-full bg-white rounded-lg my-2 py-[5px] shadow-md border-[1px]'>
+      className='w-full bg-white rounded-lg my-2 py-[5px] mt-3 shadow-md border-[1px]'>
           <div className='w-full ' key ={post._id}>
             <div className='flex font-medium text-[17px] hover:cursor-pointer items-start'>
               <img onClick={() => getUserpost(post.userId)} src={`http://localhost:6001/streamId/${post.userId.userPic}`} 
                 className='post-profile-pic' alt="Post" />
               <div onClick={() => getUserpost(post.userId)} className='pl-[5px] flex flex-col hover:cursor-pointer'>
-                <div>{post.fullname}</div> 
+                <div className='hover:underline'>{post.fullname}</div> 
                 <div className='text-[13px]'>{FormatTime(new Date(post.createdAt))}</div>
               </div>
               {frnds.friends && frnds.friends.some(friend => friend._id === post.userId._id ||friend._id === userId) ? (

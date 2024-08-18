@@ -12,9 +12,11 @@ import userRoutes from './routes/user.js';
 import messageRoutes from './routes/message.js'
 import authRoutes from './routes/auth.js';
 import postRoutes from './routes/post.js'
+import storyRoutes from './routes/story.js'
 import notifyRoutes from './routes/notify.js';
 import authUser from './middleware/authorization.js';
-import {createPost,createStory} from './controller/post.js'
+import {createStory} from './controller/story.js'
+import {createPost} from './controller/post.js'
 import {connectToDb, gfs ,storage} from './db/connectToMongo.js'
 import {setSocketIo} from './middleware/socket.js'
 import { Server } from "socket.io";
@@ -24,11 +26,11 @@ import { sendMessage} from './controller/message.js'
 
 const app = express();
 
-app.use(cors({ origin: 'http://localhost:5173' }));
+app.use(cors({ origin: ['http://localhost:5173', 'http://192.168.0.192:5173', 'http://192.168.0.123:5173'] }));
 const server = createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: "http://localhost:5173",
+    origin: ['http://localhost:5173', 'http://192.168.0.192:5173', 'http://192.168.0.123:5173'],
     methods: ["GET", "POST"],
     credentials: true,
   },
@@ -51,6 +53,7 @@ app.use('/message', messageRoutes);// get messages
 app.use('/auth', authRoutes);   //authentications
 app.use('/post', postRoutes);   //posts activities(create, like, comment, get posts)
 app.use('/notify', notifyRoutes);// get messages
+app.use('/story', storyRoutes);
 
 //stream files
 app.get('/stream/:filename',streamFile)
@@ -60,6 +63,7 @@ app.post('/auth/register', upload.single('picture'), register);
 app.post('/post/createpost', upload.single('file'), createPost);
 app.post('/message/send/:id',upload.single('file'),sendMessage); //friend id
 // app.post('/post/story', authUser, upload.single('file'), createStory);
+app.post('/post/story', upload.single('image'), createStory);
 
 const PORT = process.env.PORT || 5000;
 server.listen(PORT, () => {

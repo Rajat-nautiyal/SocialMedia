@@ -46,7 +46,7 @@ export const CreatePost = ({handleClick}) => {
         }
       }
   return (
-    <div className='w-full bg-white rounded-lg my-2 items-center 
+    <div className='w-full bg-white rounded-lg my-2 mb-4 items-center 
       pb-[5px] shadow-md pt-[10px] border-[1px]'>
       <form ref={formRef} onSubmit={postData} className='w-full' >
         <div className='flex space-x-1'>

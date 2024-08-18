@@ -11,9 +11,9 @@ export const register = async(req,res) =>{
             password, 
             location,
             occupation} = req.body;
-
+            
         const userpic = req.file? req.file.id: null;
-        // console.log(req.file)
+        console.log('registered pic is',req.file)
         const salt = await bcrypt.genSalt(); 
         const hashedPassword = await bcrypt.hash(password, salt);
 
@@ -64,7 +64,7 @@ export const login = async(req,res) =>{
     try{
         const {email, password} = req.body;
         const user = await User.findOne({email:email})
-    
+        console.log(email)
         if(!user) return res.status(400).json({message:'user not found'}) ;
         
         const IsMatch = await bcrypt.compare(password, user.password);

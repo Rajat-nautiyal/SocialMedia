@@ -12,10 +12,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { socketHook } from '../../hooks/socketHook.jsx';
 import {setOnlineUsers} from '../../state/index.jsx';
 import {NotifyHook} from '../../hooks/notifyHook.jsx';
-
+import { LastMessageHook } from '../../hooks/getLastMessage.jsx';
 export const Home = () => {
   const isMobile = useMediaQuery('(max-width: 768px)');
-  // const userId = useSelector((state)=>state.userSlice.user._id);
+  // const userId = useSelector((state)=>state.userSlice.user._id)
+  const lastMessage = LastMessageHook();
   const mode = useSelector((state)=>state.userSlice.mode)
   const messagePageBool = useSelector((state)=>state.userSlice.messagePageBool);
   const notifyPageBool = useSelector((state)=>state.userSlice.notifyPageBool);
@@ -32,6 +33,7 @@ export const Home = () => {
     }
   },[])
   useEffect(()=>{
+    lastMessage()
     getNotify()
   },[])
 
@@ -57,7 +59,8 @@ export const Home = () => {
       </div>
       </> ):(
       <>
-        <div>
+      hi
+        {/* <div>
           <div>
             <div>SocialEra</div>
             <div><Search/></div>
@@ -70,7 +73,7 @@ export const Home = () => {
         </div>
         <Profile/>
         <Posts/>
-        <Friends/>:<ChatUsers/>
+        <Friends/>:<ChatUsers/> */}
         </>)
     } 
     </>

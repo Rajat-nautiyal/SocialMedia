@@ -16,6 +16,7 @@ export const setSocketIo =async(io)=>{
       await socket.join(room); 
       if(!chatUser) return;
         console.log({ room, chatUser });
+        io.emit('new-message',chatUser)
         // console.log(chatUser)
         socket.join(room);
         io.to(room).emit("receive-message", chatUser);

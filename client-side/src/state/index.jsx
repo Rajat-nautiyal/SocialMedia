@@ -5,6 +5,7 @@ const initialState = {
     user: null,
     token: null,
     posts: [],
+    stories:[],
     notifications:[],
     profileUser:null,
     messagePageBool:false,
@@ -12,7 +13,8 @@ const initialState = {
     onlineUsers:[],
     originalfriends:[],
     navClickValue:'home',
-    socketLastMessage:null
+    socketLastMessage:null,
+    lastMessage:null,
   };
 const userSlice = createSlice({
   name: 'userState',
@@ -42,6 +44,16 @@ const userSlice = createSlice({
       });
       state.posts = updatedPosts;      
     },
+    setStories:(state,action)=>{
+      // console.log(action.payload)
+      state.stories = action.payload;      
+    },
+    createStory:(state,action)=>{
+      console.log(action.payload)
+      state.stories.push(action.payload)
+      console.log(state.stories)
+    },
+
     setProfileUser:(state,action)=>{
       state.profileUser = action.payload;
     },
@@ -62,6 +74,7 @@ const userSlice = createSlice({
       state.socketLastMessage = action.payload;
     },
     setMessagePageBool:(state,action)=>{
+      // console.log(action.payload)
       state.messagePageBool = action.payload;
     },
     setNotifyPageBool:(state,action)=>{
@@ -74,10 +87,13 @@ const userSlice = createSlice({
       // console.log(action.payload)
       state.navClickValue = action.payload;
     },
+    setLastMessage:(state,action)=>{
+      state.lastMessage = action.payload;
+    }
   },
 });
 
-export const { setLogin, setLogout, setPosts, updatePost, setOnlineUsers,
+export const { setLogin, setLogout, setPosts, updatePost, setOnlineUsers,setLastMessage,
   setNotifications, setNavClickValue,setFriends, setProfileUser, setMessagePageBool, 
-  setMode, setNotifyPageBool,setSocketLastMessage} = userSlice.actions;
+  setMode, setNotifyPageBool,setSocketLastMessage, createStory,setStories} = userSlice.actions;
 export default userSlice.reducer;
