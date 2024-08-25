@@ -25,7 +25,7 @@ export const Post = ({post}) => {
 
     const likePost = async(postId)=>{
         try{
-          const res = await fetch(`http://localhost:6001/post/like/${postId}`,{
+          const res = await fetch(`http://192.168.0.130:6001/post/like/${postId}`,{
             method: 'PATCH',
             headers:{
               'content-type':'application/json'
@@ -42,10 +42,10 @@ export const Post = ({post}) => {
 
   return (
     <div id={mode?'darkPost':''}
-      className='w-full bg-white rounded-lg my-2 py-[5px] mt-3 shadow-md border-[1px]'>
-          <div className='w-full ' key ={post._id}>
+      className='w-full bg-white rounded-lg my-2 max-md:my-5 py-[5px] mt-3 shadow-md border-[1px]'>
+          <div className='w-full' key ={post._id}>
             <div className='flex font-medium text-[17px] hover:cursor-pointer items-start'>
-              <img onClick={() => getUserpost(post.userId)} src={`http://localhost:6001/streamId/${post.userId.userPic}`} 
+              <img onClick={() => getUserpost(post.userId)} src={`http://192.168.0.130:6001/streamId/${post.userId.userPic}`} 
                 className='post-profile-pic' alt="Post" />
               <div onClick={() => getUserpost(post.userId)} className='pl-[5px] flex flex-col hover:cursor-pointer'>
                 <div className='hover:underline'>{post.fullname}</div> 
@@ -67,12 +67,12 @@ export const Post = ({post}) => {
                </div>
               )}
             </div>
-            <p className='pl-[6px] pb-[5px]'>{post.description}</p>
+            <p className='pl-[6px] pb-[5px] font-poppins font-medium max-md:mb-1 mt-2'>{post.description}</p>
             {post.postPicturePath && post.postPicturePath.contentType ? (
               post.postPicturePath.contentType === 'image/png' || post.postPicturePath.contentType === 'image/jpeg' ? (
-                <img src={`http://localhost:6001/stream/${post.postPicturePath.filename}`} className='postPic' alt="Post" />
+                <img src={`http://192.168.0.130:6001/stream/${post.postPicturePath.filename}`} className='postPic' alt="Post" />
               ) : post.postPicturePath.contentType === 'video/mp4' ? (
-                <video src={`http://localhost:6001/stream/${post.postPicturePath.filename}`} 
+                <video src={`http://192.168.0.130:6001/stream/${post.postPicturePath.filename}`} 
                 className='postPic' controls></video>
               ) : (
                 <div>Unsupported content type</div>

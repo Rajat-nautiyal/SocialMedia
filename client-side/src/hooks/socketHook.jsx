@@ -8,7 +8,7 @@ export const socketHook = () => {
   const messagePage = useSelector((state)=>state.userSlice.messagePage);
   const friend = useSelector((state)=>state.userSlice.friend);
   const dispatch = useDispatch();
-  const socket = useMemo(()=>io("http://localhost:6001", {
+  const socket = useMemo(()=>io("http://192.168.0.130:6001", {
         withCredentials: true,
         query: {
 					userId: userId,
@@ -18,7 +18,7 @@ export const socketHook = () => {
       
   useEffect(() => {
     socket.on("connect", () => {
-      console.log("connected", socket.id);
+      // console.log("connected", socket.id);
     });    
     return () => {
       socket.disconnect();

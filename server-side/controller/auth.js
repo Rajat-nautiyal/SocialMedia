@@ -70,9 +70,9 @@ export const login = async(req,res) =>{
         const IsMatch = await bcrypt.compare(password, user.password);
         if(!IsMatch) return res.status(400).json({message:'Invalid credentials'});
     
-        const token = jwt.sign({id:user._id}, process.env.JWT_SECRET_KEY);
+        const token = jwt.sign({id:user._id}, process.env.JWT_SECRET_KEY,{expiresIn:'15m'});
         res.cookie('jwt',token, {
-            maxAge: 15*60*1000, //cookie expires in 15min
+            maxAge: 15*60*1000, //expires in 15min
             httpOnly: true,
             sameSite: 'strict'
         })

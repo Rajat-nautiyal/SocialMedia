@@ -16,12 +16,13 @@ export const Login = () => {
     const submitLogin = async(data) => {
       try {
         console.log(data)
-        const res = await fetch('http://localhost:6001/auth/login', {
+        const res = await fetch('http://192.168.0.130:6001/auth/login', {
             method: 'POST',
             headers:{
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(data)
+            body: JSON.stringify(data),
+            credentials: 'include'
         });
         const logInData = await res.json();
         console.log('data')
@@ -33,7 +34,7 @@ export const Login = () => {
         }))
         localStorage.setItem('darkMode', JSON.stringify(false));
         // dispatch(setMode(false))
-        console.log('form data is', logInData.message);
+        console.log('form data is', logInData);
     } catch (error) {
         console.error('Error submitting form:', error);
     }

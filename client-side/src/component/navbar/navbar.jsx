@@ -3,13 +3,15 @@ import {  useNavigate } from 'react-router-dom';
 import { RiHome2Line } from "react-icons/ri";
 import { FaUsers } from "react-icons/fa6";
 import { useDispatch, useSelector } from 'react-redux'
-import { setLogout, setProfileUser,setMode, setLastMessage } from '../../state/index.jsx'
+import { setLogout, setProfileUser,setMode } from '../../state/index.jsx'
+import { useMediaQuery } from '@react-hook/media-query';
 import { AiOutlineMessage } from "react-icons/ai";
 import { MdOutlineNotificationsActive } from "react-icons/md";
 import { GoDotFill } from "react-icons/go";
 import { IoLogoGithub } from "react-icons/io";
 import { MdDarkMode } from "react-icons/md";
 import { MdLightMode } from "react-icons/md";
+import { IoIosSettings } from "react-icons/io";
 import { IoIosLogOut } from "react-icons/io";
 import { IoShareSocialOutline } from "react-icons/io5";
 import '../../pages/home/home.css'
@@ -23,10 +25,11 @@ export const Navbar = () => {
   const dispatch = useDispatch();
   const [newMessage, setNewMessage] = useState(null)
   const [lastMessage, setLastMessage] = useState(null)
+  const [settings, setSettings] = useState(false)
+
+  const isMobile = useMediaQuery('(max-width: 768px)');
 
   const lastChat = useSelector((state)=>state.userSlice.lastMessage);
-  // const [lastChat, setLastChat] = useState(lastMessage)
-  // const lastReadMessage = lastMessage.filter(c => c.read===false)
   const userId = useSelector((state)=>state.userSlice.user._id);
   const mode = useSelector((state)=>state.userSlice.mode);
   const messagePageBool = useSelector((state)=>state.userSlice.messagePageBool);
@@ -69,6 +72,7 @@ export const Navbar = () => {
     }
     if(notifyPageBool===true){
       dispatch(setNotifyPageBool(!notifyPageBool));
+
     }
     dispatch(setNotifyPageBool(!notifyPageBool));
   }
@@ -117,49 +121,59 @@ export const Navbar = () => {
   return (
     <>
      <div className='top-header' id={mode?'darkTopheader':''}>
-        <div className='flex flex-row w-9/12'>
+        <div className='flex flex-row w-9/12 sticky top-0 ml-1'>
           <div className='nameNsearch'>
-            <div className='flex flex-row text-[30px] items-center'>
-              <IoShareSocialOutline/>SocialEra
+            <div className='flex flex-row text-[30px] items-center max-md:text-[26px]'>
+              <IoShareSocialOutline className='text-white text-[35px] h-8 w-8 pr-[1px] bg-blue-700 rounded-full mr-1'/>
+              <div className='font-roboto'>SocialEra</div>
             </div> 
-            <div className='text-[18px]'><Search/></div>
+            <div className='text-[18px] w-auto max-md:overflow-hidden max-md:rounded-full'><Search/></div>
           </div>
           <div className='navHeader scrollbar-hide'>
-            <div className='flex justify-around gap-[6%] w-[100%] text-[25px] 
-            overflow-y-hidden scrollbar-hide'>
-              <div className={`hover:bg-gray-300 cursor-pointer py-2 px-8 transition-all 
-                rounded-lg`} id={navClickValue=='home'&&!mode?'home':navClickValue=='home'&&mode?'darkHome':null}
+            <div className='flex justify-center gap-[6%] max-md:gap-0 w-[100%] text-[25px] 
+              overflow-y-hidden scrollbar-hide  max-md:justify-center 
+              max-md:items-center max-md:bg-black max-md:bg-opacity-90 max-md:w-auto 
+              max-md:rounded-full max-md:py-2 max-md:mx-2 max-md:z-10 max-md:px-2'>
+              <div className={`hover:bg-gray-300 max-md:ml-1 max-md:hover:bg-black cursor-pointer py-2 px-8 max-md:px-6 transition-all 
+                rounded-lg max-tl:px-4`} id={navClickValue=='home'&&!mode?'home':navClickValue=='home'&&mode?'darkHome':null}
                 onClick={handleClick}>
                   <RiHome2Line className={mode&&navClickValue==='home'?`text-primary-Default`:``}/>
               </div>
-              <div className='hover:bg-gray-300 cursor-pointer py-2 px-8 transition-all 
-              rounded-lg' id={navClickValue=='users'&&!mode?'users':navClickValue=='users'&&mode?'darkUsers':null}
+              <div className='hover:bg-gray-300 cursor-pointer py-2 px-8 transition-all max-md:px-6
+              rounded-lg max-tl:px-4' id={navClickValue=='users'&&!mode?'users':navClickValue=='users'&&mode?'darkUsers':null}
                 onClick={handleClickUsers}>
                   <FaUsers className={mode&&navClickValue==='users'?`text-primary-Default`:``} 
                   />
               </div>
               <div onClick={handleClickNotify}
                 id={notifyPageBool && !mode ? 'notify' : notifyPageBool && mode ? 'darkNotify' : null}
-                className="relative hover:bg-gray-300 cursor-pointer py-2 px-8 transition-all rounded-lg overflow-hidden"
+                className="relative hover:bg-gray-300 max-tl:px-4 max-md:px-6 cursor-pointer py-2 px-8 transition-all rounded-lg overflow-hidden"
               >
-                {notifyCount!==0?<div className="absolute top-0 right-2 flex items-center justify-center h-6 w-6 text-[14px] font-semibold text-red-500 rounded-full bg-gray-300">
+                {notifyCount!==0?<div className="absolute top-0 right-3 max-tl:right-1 flex items-center justify-center h-5 w-5
+                 text-[14px] font-semibold text-white rounded-full bg-red-600">
                   {notifyCount}
                 </div>:null}
                 <MdOutlineNotificationsActive 
                   className={`${mode && notifyPageBool ? 'text-primary-Default' : ''} text-[24px]`} 
                 />
               </div>
-              <div className='hover:bg-gray-300 cursor-pointer py-2 px-8 transition-all rounded-lg' 
-                onClick={handleClickMessage} id={messagePageBool&&!mode?'chat':messagePageBool&&mode?'darkChat':null}
-              > {newMessage||lastMessage?<div className="absolute top-0 right-7 flex items-center justify-center h-6 w-6 text-[14px] font-semibold text-red-500 rounded-full">
-                < GoDotFill className='absolute text-[23px] top-0 right-0 animate-ping '/>
-                < GoDotFill className='text-[22px] top-0 right-0'/>
-                  </div>:null}
-                  <AiOutlineMessage className={mode&&messagePageBool?`text-primary-Default`:``}/>
+              <div onClick={handleClickMessage}
+                className='relative hover:bg-gray-300 max-md:mr-1 max-tl:px-4 max-md:px-6 cursor-pointer py-2 px-8 transition-all rounded-lg' 
+                id={messagePageBool && !mode ? 'chat' : messagePageBool && mode ? 'darkChat' : null}
+              >
+              {(newMessage || lastMessage) && (
+                <div className="absolute top-0 right-5 max-tl:right-0 h-4 w-4 max-md:right-3 flex items-center justify-center">
+                  <GoDotFill className='absolute text-red-500 text-[22px]  animate-ping' />
+                  <GoDotFill className='text-red-500 text-[22px]' />
               </div>
+            )}
+            <AiOutlineMessage className={mode && messagePageBool ? `text-primary-Default` : ``} />
+          </div>
             </div>
           </div>
         </div>
+
+    {!isMobile?
         <div className='flex flex-row items-center w-[20%] justify-around text-[25px]'>
           <div onClick ={toggleDarkMode} className='hover:bg-gray-300 cursor-pointer py-2 px-8 transition-all rounded-lg'>
             {mode?<MdLightMode className='text-customGray'/>:<MdDarkMode/>}
@@ -171,6 +185,25 @@ export const Navbar = () => {
             <IoLogoGithub/>
           </div>
         </div>
+        :
+        <div className='flex items-center'>
+          <IoIosSettings className='text-[27px] text-slate-500'
+           onClick={()=>setSettings(!settings)}/>
+          <div className='hover:bg-gray-300 text-[26px] cursor-pointer ml-3 transition-all 
+          rounded-lg' onClick={clickGit}>
+            <IoLogoGithub/>
+          </div>
+          {settings?
+          <div className='absolute top-[50px] right-2 flex flex-col items-center bg-gray-300 
+            text-[25px] rounded-xl'>
+            <div onClick ={toggleDarkMode} className='hover:bg-gray-300 cursor-pointer py-2 px-8 transition-all rounded-lg'>
+              {mode?<MdLightMode className='text-customGray'/>:<MdDarkMode/>}
+            </div>
+            <div onClick={handleLogout} className='hover:bg-gray-300 cursor-pointer py-2 px-8 
+            transition-all rounded-lg'><IoIosLogOut/></div>
+          </div>:null
+        }
+        </div>}
       </div>
 
     </>

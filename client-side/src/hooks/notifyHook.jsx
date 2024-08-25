@@ -7,14 +7,14 @@ export const NotifyHook = () => {
     const userId = useSelector((state)=>state.userSlice.user._id);
     const getNotify = async()=>{
         try{
-          const res = await fetch(`http://localhost:6001/notify/${userId}`,{
+          const res = await fetch(`http://192.168.0.130:6001/notify/${userId}`,{
             method: 'GET',
             headers:{
               'content-type':'application/json'
             },
           })
           const data = await res.json()
-          console.log(data)
+          // console.log(data)
           dispatch(setNotifications(data))
         } catch(e){
             console.log(e.message)
@@ -32,7 +32,7 @@ export const useUpdateNotifyHook = () => {
 
   const patchNotify = async () => {
     try {
-      await fetch(`http://localhost:6001/notify/update/${userId}`, {
+      await fetch(`http://192.168.0.130:6001/notify/update/${userId}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',

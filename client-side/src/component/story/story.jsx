@@ -4,27 +4,31 @@ import { IoAdd } from "react-icons/io5";
 import {GetStory} from "./getStory.jsx"
 import { useDispatch, useSelector } from 'react-redux';
 import { setStories } from '../../state/index.jsx';
+import generalBg from '../../../public/assets/40345755_2163632403908042_6254610308791271424_n.jpg'
 
 export const Story = () => {
   const userPic =  useSelector(state=>state.userSlice.user.userPic);
   const [story, setStory] = useState(false)
+  const [createdStory, setCreatedStory] = useState(false)
   const stories =  useSelector(state=>state.userSlice.stories);
-  const generalBg = 'https://scontent-del1-1.xx.fbcdn.net/v/t39.10873-6/40345755_2163632403908042_6254610308791271424_n.jpg?_nc_cat=1&ccb=1-7&_nc_sid=427b5c&_nc_ohc=0Z0D6SF7mMwQ7kNvgEyQm2D&_nc_ht=scontent-del1-1.xx&cb_e2o_trans=t&oh=00_AYCf2DVmebUy7_bLeNmRe-UZfpEcl885pZ_nwsuZn7p2vA&oe=66C5B750'
 
+  const handleStory =()=>{
+    setCreatedStory(!createdStory);
+  }
   const handleClick =()=>{
     setStory(null)
   }
   const dispatch = useDispatch();
   const fetchStories = async()=>{
     try{
-      const res = await fetch(`http://localhost:6001/story`,{
+      const res = await fetch(`http://192.168.0.130:6001/story`,{
         method: 'GET',
         headers:{
           'content-type':'application/json'
         },
       })
       const data = await res.json()
-      console.log(data)
+      // console.log(data)
       dispatch(setStories(data))
     } catch(e){
         console.log(e.message)
@@ -32,12 +36,12 @@ export const Story = () => {
   }
   useEffect(()=>{
     fetchStories()
-  },[])
+  },[createdStory])
   return (
-    <div className='w-full h-[30%] overflow-x-scroll overflow-y-hidden my-2 mb-5 
+    <div className='w-full h-[30%] max-md:h-[25vh] overflow-x-scroll overflow-y-hidden my-2 mb-5 
       scrollbar-hide flex items-center'>
       <div className='h-full w-full flex flex-row space-x-4 overflow scrollbar-hide'>
-        <CreateStory />
+        <CreateStory handleStory ={handleStory} />
         {stories && stories.map((s) => (
           <div onClick={()=>setStory(s)} 
             key={s._id}
@@ -52,14 +56,14 @@ export const Story = () => {
                   {s.description}
                 </div>:null}
                 <img 
-                    src={s.postPicturePath?`http://localhost:6001/streamId/${s.postPicturePath}`:generalBg}
+                    src={s.postPicturePath?`http://192.168.0.130:6001/streamId/${s.postPicturePath}`:generalBg}
                     className="w-full h-full object-cover rounded-xl" 
                     alt="story" 
                 />
             </div>
             <div className='absolute flex flex-col w-full h-full justify-between p-2'>
               <img 
-                src={`http://localhost:6001/streamId/${s.userId.userPic}`}
+                src={`http://192.168.0.130:6001/streamId/${s.userId.userPic}`}
                 className="h-[48px] w-[48px] border-[3.5px] border-blue-700 rounded-full" 
               />
               <div className='text-white text-sm'>{s.userId.firstname} {s.userId.lastname}</div>

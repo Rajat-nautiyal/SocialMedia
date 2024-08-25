@@ -24,7 +24,7 @@ export const Register = () => {
                 formData.append(key, data[key]);
             }
         }
-        const res = await fetch('http://localhost:6001/auth/register', {
+        const res = await fetch('http://192.168.0.130:6001/auth/register', {
             method: 'POST',
             body: formData
         });

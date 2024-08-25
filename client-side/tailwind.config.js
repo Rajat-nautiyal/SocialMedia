@@ -19,10 +19,21 @@ export default {
               dark: '#222831',
             },
             customGray: '#a0aec0',
-            customRed: '#f56565',
-            customYellow: '#ecc94b',
             darkGrey:'#292A2D'
           }, 
+          screens: {
+            'mob': { 'max': '480px' },
+            'max-sm': { 'max': '640px' },
+            'max-md': { 'max': '768px' },
+            'max-tl': { 'min': '769px','max':'1000px' },
+          },      
+          fontFamily: {
+            roboto: ['Roboto', 'sans-serif'],
+            poppins:'Poppins',
+            montserrat:'Montserrat',
+            inter:'Inter'
+          },
+    
           keyframes: {
             slide: {
               '0%': { transform: 'translateX(0%)' },

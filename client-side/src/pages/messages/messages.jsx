@@ -7,11 +7,16 @@ import {Messages} from '../../component/messages.jsx'
 import { socketHook } from '../../hooks/socketHook.jsx';
 import NotifySound from "../../../public/assets/notification.mp3"
 import NotifySoundTwo from "../../../public/assets/tap-notification-180637.mp3"
+import { useMediaQuery } from '@react-hook/media-query';
+import { setMessagePageBool } from '../../state/index.jsx';
+import { IoArrowBackSharp } from "react-icons/io5";
 
 export const ChatUsers = () => {
   const [friend, setFriend] = useState(null)
   const [lastMessage, setLastMessage] = useState(null)
   const [newMessage, setNewMessage] = useState(null)
+  const isMobile = useMediaQuery('(max-width: 768px)');
+  const dispatch = useDispatch();
 
   const originalfriends = useSelector((state)=>state.userSlice.originalfriends);
   const user = useSelector((state)=>state.userSlice.user);
@@ -24,10 +29,13 @@ export const ChatUsers = () => {
   const handleClick =()=>{
     setFriend(null)
   }
-
+  const handleClickTwo =()=>{
+      dispatch(setMessagePageBool(!messagePageBool));
+    
+  }
   const getLastMessages = async () => {
     try {
-      const res = await fetch(`http://localhost:6001/message/${userId}`, {
+      const res = await fetch(`http://192.168.0.130:6001/message/${userId}`, {
         method: 'GET',
         headers: {
           'content-type': 'application/json',
@@ -46,10 +54,8 @@ export const ChatUsers = () => {
         setNewMessage(data);
         // console.log(data.senderId)
         if (data.receiverId === userId||data.senderId === userId) {
-          if(data.receiverId === userId){
             const sound = new Audio(NotifySoundTwo);
             sound.play();
-          }          
         }
       }
     });
@@ -64,8 +70,13 @@ export const ChatUsers = () => {
   }, [friend,messagePageBool]);
 
   return (
-    <div className='w-full bg-[#606060] overflow-y-auto h-full rounded-xl p-4' id={mode?'darkChatBg':''}>
-      <div className='text-[25px] font-semibold border-b-2 text-white border-blue-500 mb-4'>Your Chats</div>
+    <div className='w-full bg-[rgb(96,96,96)] max-md:h-[100dvh] max-md:rounded-none
+     overflow-y-auto h-full rounded-xl p-4' id={mode?'darkChatBg':''}>
+      <div className='text-[25px] flex items-center font-semibold border-b-2
+         text-white border-blue-500 mb-4 '>
+        <IoArrowBackSharp onClick={handleClickTwo} className='mr-2 hover:bg-gray-600 rounded-full'/>
+        Your Chats
+      </div>
       
       {onlineUsers.length >=1 || onlineUsers.includes(userId) ? (
         <div className='text-lg text-white mb-2'>Online Users</div>
@@ -75,7 +86,7 @@ export const ChatUsers = () => {
       <div className="flex flex-row overflow-x-auto space-x-4 pb-4">
           <div className="flex flex-col hover:cursor-pointer items-center space-y-2">
               <img 
-                src={`http://localhost:6001/streamId/${user.userPic}`} 
+                src={`http://192.168.0.130:6001/streamId/${user.userPic}`} 
                 className='h-[45px] w-[45px] hover:h-[48px] hover:w-[48px] transition-all rounded-full object-cover' 
                 alt='You'
               />
@@ -87,7 +98,7 @@ export const ChatUsers = () => {
             <div key={u._id} onClick={() => setFriend(u)}
             className="flex flex-col hover:cursor-pointer items-center space-y-2">
               <img 
-                src={`http://localhost:6001/streamId/${u.userPic}`} 
+                src={`http://192.168.0.130:6001/streamId/${u.userPic}`} 
                 className='h-[45px] w-[45px] hover:h-[48px] hover:w-[48px] transition-all rounded-full object-cover' 
                 alt={`${u.firstname}`} 
               />
@@ -113,7 +124,7 @@ export const ChatUsers = () => {
                hover:bg-gray-100 transition duration-150 ease-in-out cursor-pointer"
             >
               <img
-                src={`http://localhost:6001/streamId/${u.userPic}`}
+                src={`http://192.168.0.130:6001/streamId/${u.userPic}`}
                 className="h-[45px] w-[45px] rounded-full object-cover"
                 alt={`${u.firstname}`}
               />
@@ -149,7 +160,7 @@ export const ChatUsers = () => {
              hover:bg-gray-100 transition duration-150 ease-in-out cursor-pointer"
           >
             <img
-              src={`http://localhost:6001/streamId/${u.userPic}`}
+              src={`http://192.168.0.130:6001/streamId/${u.userPic}`}
               className="h-[45px] w-[45px] rounded-full object-cover"
               alt={`${u.firstname}`}
             />
@@ -173,10 +184,13 @@ export const ChatUsers = () => {
 
       {/* Messages Section */}
       {friend ? (
-        <div className='absolute h-full w-full top-0 bg-orange-200 z-10'>
+        <div className='absolute h-full w-full max-md:h-[100dvh] max-md:left-0 
+          top-0 bg-white z-10 overflow-hidden'>
           <Messages friend={friend} handleClick={handleClick} />
         </div>
       ) : null}
+      {originalfriends.friends.length===0?
+        <div className='text-white text-center font-inter font-light'>Add friends to chat</div>:null}
     </div>
 
   )

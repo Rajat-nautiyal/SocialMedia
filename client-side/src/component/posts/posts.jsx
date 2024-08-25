@@ -21,7 +21,7 @@ export const Posts = () => {
 
   const getPosts = async()=>{
     try{
-      const res = await fetch('http://localhost:6001/post',{
+      const res = await fetch('http://192.168.0.130:6001/post',{
         method: 'GET',
         headers:{
           'content-type':'application/json'
@@ -45,6 +45,8 @@ export const Posts = () => {
     <div className='w-full my-4'>
       {!profileUser?(<><Story/>
         <CreatePost handleClick ={handleClick}/></>):null}
+        <h2 className={mode ? 'text-[20px] text-white font-semibold pt-2 pb-1 ml-2  font-montserrat' 
+        : 'text-[20px] pt-2 pb-1 ml-2 font-semibold font-montserrat'}>Feeds</h2>
       {posts.length > 0 ? (
         posts.map((post) =>(
           <Post key = {post._id} post = {post}/>

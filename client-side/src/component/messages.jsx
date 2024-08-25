@@ -22,6 +22,7 @@ export const Messages = ({ friend, handleClick }) => {
   const element = document.getElementById('chats');
 
   const smoothScroll =()=>{
+    const element = document.getElementById('chats');
     setTimeout(()=>{
       element.scrollTo({
         top: element.scrollHeight,
@@ -32,15 +33,13 @@ export const Messages = ({ friend, handleClick }) => {
 
   const sendMessages = async () => {
     try {
-      const res = await fetch(`http://localhost:6001/message/send/${friend._id}`, {
+      const res = await fetch(`http://192.168.0.130:6001/message/send/${friend._id}`, {
         method: 'POST',
         headers: {
           'content-type': 'application/json'
         },
         body: JSON.stringify({ message, userId })
       });
-      // const data = await res.json();
-      // console.log(data);
       smoothScroll()
       setMessage(''); //clear input
   
@@ -62,7 +61,7 @@ export const Messages = ({ friend, handleClick }) => {
 
   const getMessages = async () => {
     try {
-      const res = await fetch(`http://localhost:6001/message/${userId}/${friend._id}`, {
+      const res = await fetch(`http://192.168.0.130:6001/message/${userId}/${friend._id}`, {
         method: 'GET',
         headers: {
           'content-type': 'application/json'
@@ -106,14 +105,16 @@ export const Messages = ({ friend, handleClick }) => {
   }, []);
   
   return (
-    <div className="p-4 h-full bg-white rounded-lg flex flex-col justify-between">
+    <div className="p-4 h-full max-md:h-[100dvh]   bg-white rounded-lg 
+     flex flex-col justify-between">
       {/* Header for name img and online status*/}
-      <div className="flex items-center space-x-4 text-[22px] mb-4 border-blue-500 border-b-[2px] pb-1">
+      <div className="flex items-center max-md:sticky max-md:top-0 space-x-4 
+        text-[22px] mb-4 border-blue-500 border-b-[2px] bg-white pb-1">
         <div onClick={handleClick} className="cursor-pointer text-blue-500">
           <IoArrowBackSharp />
         </div>
         <img
-          src={`http://localhost:6001/streamId/${friend.userPic}`}
+          src={`http://192.168.0.130:6001/streamId/${friend.userPic}`}
           className="h-[45px] w-[45px] rounded-full object-cover"
           alt="pic"
         />
@@ -133,7 +134,7 @@ export const Messages = ({ friend, handleClick }) => {
           m.message ?
             <div key={index} className={`flex items-start  space-x-2 ${m.senderId === userId ? 'justify-end' : 'justify-start'}`}>
               {bool?<img
-                src={m.senderId === userId ? `http://localhost:6001/streamId/${user.userPic}` : `http://localhost:6001/streamId/${friend.userPic}`}
+                src={m.senderId === userId ? `http://192.168.0.130:6001/streamId/${user.userPic}` : `http://192.168.0.130:6001/streamId/${friend.userPic}`}
                 className="h-[38px] w-[38px] rounded-full object-cover"
                 alt="User"
               />:null}
@@ -148,7 +149,7 @@ export const Messages = ({ friend, handleClick }) => {
       </div>
 
       {/* Message Input(send messages) */}
-      <div className="flex items-center space-x-2">
+      <div className="flex items-center space-x-2 ">
         <input
           type="text"
           className="flex-grow p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"

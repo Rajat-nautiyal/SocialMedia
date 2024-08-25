@@ -12,8 +12,7 @@ export const getUserPost = ()=>{
     const getPost =async(user)=>{
       try{
         dispatch(setProfileUser(user))
-        // console.log(user)
-        const res = await fetch(`http://localhost:6001/post/${user._id}`,{
+        const res = await fetch(`http://192.168.0.130:6001/post/${user._id}`,{
           method: 'GET',
           headers:{
             'content-type':'application/json'
@@ -21,10 +20,12 @@ export const getUserPost = ()=>{
         })
         const data = await res.json() 
         dispatch(setPosts({posts:data}))
-        // setUser(data)
-        // console.log(data)
+        window.scrollTo(0, 0);
+
         navigate(`/profile/${user._id}`)
-  
+        document.documentElement.scrollTop = 0;
+
+
       } catch(e){
           console.log(e.message)
       }

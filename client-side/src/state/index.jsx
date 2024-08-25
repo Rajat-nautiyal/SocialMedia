@@ -48,12 +48,6 @@ const userSlice = createSlice({
       // console.log(action.payload)
       state.stories = action.payload;      
     },
-    createStory:(state,action)=>{
-      console.log(action.payload)
-      state.stories.push(action.payload)
-      console.log(state.stories)
-    },
-
     setProfileUser:(state,action)=>{
       state.profileUser = action.payload;
     },
@@ -66,6 +60,9 @@ const userSlice = createSlice({
       } else {
         console.error("user friends doesn't exist :(");
       }
+    },
+    setOriginalFriends:(state, action)=>{
+        state.originalfriends = action.payload;
     },
     setNotifications:(state, action)=>{
       state.notifications = action.payload;
@@ -95,5 +92,6 @@ const userSlice = createSlice({
 
 export const { setLogin, setLogout, setPosts, updatePost, setOnlineUsers,setLastMessage,
   setNotifications, setNavClickValue,setFriends, setProfileUser, setMessagePageBool, 
-  setMode, setNotifyPageBool,setSocketLastMessage, createStory,setStories} = userSlice.actions;
+  setMode, setNotifyPageBool,setSocketLastMessage, createStory,setStories,
+  setOriginalFriends,updateStories} = userSlice.actions;
 export default userSlice.reducer;

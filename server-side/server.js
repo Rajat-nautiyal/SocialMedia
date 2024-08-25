@@ -26,11 +26,11 @@ import { sendMessage} from './controller/message.js'
 
 const app = express();
 
-app.use(cors({ origin: ['http://localhost:5173', 'http://192.168.0.192:5173', 'http://192.168.0.123:5173'] }));
+app.use(cors({ origin: ['http://localhost:5173', 'http://192.168.0.130:5173'],credentials: true } ));
 const server = createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: ['http://localhost:5173', 'http://192.168.0.192:5173', 'http://192.168.0.123:5173'],
+    origin: ['http://localhost:5173', 'http://192.168.0.130:5173'],
     methods: ["GET", "POST"],
     credentials: true,
   },
@@ -58,12 +58,12 @@ app.use('/story', storyRoutes);
 //stream files
 app.get('/stream/:filename',streamFile)
 app.get('/streamId/:id',streamFileId)
-
+// app.get('api/auth/verify',authUser)
 app.post('/auth/register', upload.single('picture'), register);
-app.post('/post/createpost', upload.single('file'), createPost);
+app.post('/post/createpost',authUser, upload.single('file'), createPost);
 app.post('/message/send/:id',upload.single('file'),sendMessage); //friend id
 // app.post('/post/story', authUser, upload.single('file'), createStory);
-app.post('/post/story', upload.single('image'), createStory);
+app.post('/post/story',authUser, upload.single('image'), createStory);
 
 const PORT = process.env.PORT || 5000;
 server.listen(PORT, () => {

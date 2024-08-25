@@ -1,13 +1,10 @@
 import React, {useState, useRef} from 'react'
 import {useSelector, useDispatch} from 'react-redux'
-import { MdPhoto } from "react-icons/md";
 import { MdPhotoLibrary } from "react-icons/md";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
-import { useNavigate } from 'react-router-dom';
-import {updatePost} from '../../state/index.jsx'
 
 export const CreatePost = ({handleClick}) => {
-  const [fileName, setFileName] = useState(null);
+  const[fileName, setFileName] = useState(null);
   const[loading, setLoading]= useState(false);
   const dispatch = useDispatch();
   const formRef = useRef();
@@ -30,7 +27,7 @@ export const CreatePost = ({handleClick}) => {
         formData.append('userId',userId);
         formData.append('fullname', fullname);
        try{
-         const res = await fetch('http://localhost:6001/post/createpost',{
+         const res = await fetch('http://192.168.0.130:6001/post/createpost',{
            method:'POST',
            body: formData,
          })
@@ -50,7 +47,7 @@ export const CreatePost = ({handleClick}) => {
       pb-[5px] shadow-md pt-[10px] border-[1px]'>
       <form ref={formRef} onSubmit={postData} className='w-full' >
         <div className='flex space-x-1'>
-          <img src={`http://localhost:6001/streamId/${userPic}`} className='profile-pic'/>
+          <img src={`http://192.168.0.130:6001/streamId/${userPic}`} className='profile-pic'/>
           <input type="text" 
           className='postInput'
           name="description" placeholder="Post something..." 
@@ -69,10 +66,10 @@ export const CreatePost = ({handleClick}) => {
         />
         <label htmlFor='file' name = 'file' className='w-full'>
               <div name = 'file' className='createPostIcon'>
-                <MdPhotoLibrary className='text-[30px] text-green-400' />
+                <MdPhotoLibrary className='text-[30px] text-green-500 max-md:text-green-600'  />
                 Photo/Video
               </div>
-              <div className='text-gray-600 font-sm'>{fileName}</div>
+              <div className='text-gray-600 font-sm '>{fileName}</div>
         </label>
 
       </form>

@@ -19,7 +19,7 @@ export const Comment = ({post}) => {
     const postComment = async(e)=>{
         e.preventDefault()
         try{
-          const res = await fetch(`http://localhost:6001/post/add/comment/${post._id}`,{
+          const res = await fetch(`http://192.168.0.130:6001/post/add/comment/${post._id}`,{
             method: 'PATCH',
             headers:{
               'content-type':'application/json'
@@ -38,7 +38,7 @@ export const Comment = ({post}) => {
 
       const deleteComment = async(commentId)=>{
         try{
-          const res = await fetch(`http://localhost:6001/post/delete/comment/${post._id}`,{
+          const res = await fetch(`http://192.168.0.130:6001/post/delete/comment/${post._id}`,{
             method: 'PATCH',
             headers:{
               'content-type':'application/json'
@@ -76,11 +76,12 @@ export const Comment = ({post}) => {
                     </div>
                 </div>
               </>
-          ) : (
+            ) : (
         <>
-          <div className='absolute min-h-[200px] max-h-[350px] bg-white top-[200px] 
-          w-[70%] p-4 rounded-lg shadow-lg flex flex-col justify-between
-          left-[15%]'>
+          <div className='absolute min-h-[200px] max-h-[350px] max-md:w-full 
+            max-md:min-h-[60dvb] max-md:top-32 max-md:left-0 bg-white top-[150px] 
+            w-[70%] p-4 rounded-lg shadow-lg flex flex-col justify-between
+            left-[15%]'>
             <div className='flex justify-between text-gray-500'>
               <IoMdArrowBack className='text-3xl cursor-pointer mb-2' 
               onClick={OnClickCommentTag} />
@@ -93,7 +94,7 @@ export const Comment = ({post}) => {
                 <div key={index} className='mb-4' onClick={() => OnClickComment(userId._id, _id)}>
                   <div className='flex items-start mb-2'>
                     <img 
-                      src={`http://localhost:6001/streamId/${userId.userPic}`} 
+                      src={`http://192.168.0.130:6001/streamId/${userId.userPic}`} 
                       className='w-10 h-10 rounded-full mr-3 object-cover' 
                       alt="Post" 
                     />
@@ -110,6 +111,8 @@ export const Comment = ({post}) => {
                   )}
                 </div>
               ))}
+              {countComment==0?<div className='font-sans text-gray-400 font-medium 
+                flex justify-center mt-2'>No comments to show</div>:null}
             </div>
 
             <form className='flex items-center mt-2' onSubmit={postComment}>

@@ -1,24 +1,32 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Poppins&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Poppins&display=swap');
+
 html{
-    @apply overflow-y-hidden 
+    @apply overflow-x-hidden box-border 
 }
 body{
-    @apply bg-gray-200 h-screen w-screen overflow-hidden
+    @apply bg-gray-200 h-screen w-screen overflow-y-auto scrollbar-hide overflow-x-hidden
 }
 #root{
-    @apply  h-full m-0
+    @apply  h-full m-0 
 }
 .top-header {
     @apply flex flex-row justify-between text-[23px] w-full h-[8%] bg-white
-    shadow sticky top-0
-  }
+    shadow  sticky top-0  max-md:py-[5px]  z-10
+}
 .navHeader{
-    @apply flex items-center relative inset-y-auto w-full overflow-y-hidden;
+    @apply flex items-center relative inset-y-auto w-full overflow-y-hidden 
+    max-md:absolute max-md:z-40 max-md:h-[10vh] max-md:text-white
+     max-md:w-[100vw] max-md:rounded-3xl max-md:py-2 max-md:left-0 max-md:justify-around
+     max-md:top-[85dvb] max-md:items-end
+
 }
 .nameNsearch{
-    @apply flex flex-row items-center space-x-4;
+    @apply flex flex-row items-center space-x-4 font-roboto mob:block
 }
 .mainPage{
-    @apply flex flex-row w-full h-[92%] overflow-y-scroll;
+    @apply flex flex-row max-md:flex-col w-full h-[92%] overflow-y-scroll;
 }
 .btn {
     @apply bg-blue-500 text-white font-bold py-3 px-4 rounded-3xl
@@ -44,10 +52,10 @@ body{
 
 .createPostIcon{
     @apply flex items-center font-medium hover:cursor-pointer hover:bg-gray-300
-     text-gray-600 w-[30%] py-1 rounded-lg mt-1
+     text-gray-600 w-[30%] py-1 rounded-lg mt-1 max-md:text-[15px]
 }
 .postPic{
-    @apply w-[95%] h-[68vh] rounded mx-auto;
+    @apply w-[95%] h-[68vh] max-md:max-h-[60vh] max-md:object-fill rounded mx-auto;
 }
 .loadingBtn{
     @apply animate-spin text-[25px] font-medium rounded-3xl text-white
@@ -60,23 +68,27 @@ body{
   }
       
 #home{
-    @apply text-blue-500 border-b-[3px] border-blue-500 rounded-none hover:bg-white
+    @apply text-blue-500 border-b-[3px] border-blue-500 rounded-none hover:bg-white 
+     max-md:hover:bg-black max-md:bg-opacity-0
 }
 #users{
-    @apply text-blue-500 border-b-[3px] border-blue-500 rounded-none hover:bg-white
+    @apply text-blue-500 border-b-[3px] border-blue-500 rounded-none hover:bg-white 
+     max-md:hover:bg-black max-md:bg-opacity-0
 }
 #notify{
-    @apply text-blue-500 border-b-[3px] border-blue-500 rounded-none hover:bg-white
+    @apply text-blue-500 border-b-[3px] border-blue-500 rounded-none hover:bg-white 
+     max-md:hover:bg-black max-md:bg-opacity-0
 }
 #chat{
-    @apply text-blue-500 border-b-[3px] border-blue-500 rounded-none hover:bg-white
+    @apply text-blue-500 border-b-[3px] border-blue-500 rounded-none hover:bg-white 
+     max-md:hover:bg-black max-md:bg-opacity-0
 }
 
 #darkTopheader{
     @apply bg-primary-dark text-white
 }
 #darkHome{
-    @apply  hover:bg-primary-dark border-b-[3px] border-blue-500 rounded-none
+    @apply  hover:bg-primary-dark border-b-[3px] border-blue-500  rounded-none
 }
 #darkUsers{
     @apply  hover:bg-primary-dark border-b-[3px] border-blue-500 rounded-none
