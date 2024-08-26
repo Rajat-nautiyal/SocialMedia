@@ -21,7 +21,7 @@ export const Story = () => {
   const dispatch = useDispatch();
   const fetchStories = async()=>{
     try{
-      const res = await fetch(`http://localhost:6001/story`,{
+      const res = await fetch(`https://socialmedia-z9uq.onrender.com/story`,{
         method: 'GET',
         headers:{
           'content-type':'application/json'
@@ -56,14 +56,14 @@ export const Story = () => {
                   {s.description}
                 </div>:null}
                 <img 
-                    src={s.postPicturePath?`http://localhost:6001/streamId/${s.postPicturePath}`:generalBg}
+                    src={s.postPicturePath?`https://socialmedia-z9uq.onrender.com/streamId/${s.postPicturePath}`:generalBg}
                     className="w-full h-full object-cover rounded-xl" 
                     alt="story" 
                 />
             </div>
             <div className='absolute flex flex-col w-full h-full justify-between p-2'>
               <img 
-                src={`http://localhost:6001/streamId/${s.userId.userPic}`}
+                src={`https://socialmedia-z9uq.onrender.com/streamId/${s.userId.userPic}`}
                 className="h-[48px] w-[48px] border-[3.5px] border-blue-700 rounded-full" 
               />
               <div className='text-white text-sm'>{s.userId.firstname} {s.userId.lastname}</div>

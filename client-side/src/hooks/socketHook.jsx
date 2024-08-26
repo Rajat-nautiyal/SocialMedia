@@ -7,7 +7,7 @@ export const socketHook = () => {
   const messagePage = useSelector((state)=>state.userSlice.messagePage);
   const friend = useSelector((state)=>state.userSlice.friend);
   const dispatch = useDispatch();
-  const socket = useMemo(()=>io("http://localhost:6001", {
+  const socket = useMemo(()=>io("https://socialmedia-z9uq.onrender.com", {
         withCredentials: true,
         query: {
 					userId: userId,

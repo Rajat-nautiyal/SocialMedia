@@ -93,7 +93,7 @@ export const Navbar = () => {
 
   const handleLogout = async () => {
     try {
-      await fetch("http://localhost:6001/auth/logout", {
+      await fetch("https://socialmedia-z9uq.onrender.com/auth/logout", {
         method: "GET",
         credentials: "include",
       });

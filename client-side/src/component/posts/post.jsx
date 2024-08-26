@@ -25,7 +25,7 @@ export const Post = ({ post }) => {
 
   const likePost = async (postId) => {
     try {
-      const res = await fetch(`http://localhost:6001/post/like/${postId}`, {
+      const res = await fetch(`https://socialmedia-z9uq.onrender.com/post/like/${postId}`, {
         method: "PATCH",
         headers: {
           "content-type": "application/json",
@@ -50,7 +50,7 @@ export const Post = ({ post }) => {
         <div className="flex font-medium text-[17px] hover:cursor-pointer items-start">
           <img
             onClick={() => getUserpost(post.userId)}
-            src={`http://localhost:6001/streamId/${post.userId.userPic}`}
+            src={`https://socialmedia-z9uq.onrender.com/streamId/${post.userId.userPic}`}
             className="post-profile-pic"
             alt="Post"
           />
@@ -111,13 +111,13 @@ export const Post = ({ post }) => {
           post.postPicturePath.contentType === "image/jpeg" ||
           post.postPicturePath.contentType === "image/webp"? (
             <img
-              src={`http://localhost:6001/stream/${post.postPicturePath.filename}`}
+              src={`https://socialmedia-z9uq.onrender.com/stream/${post.postPicturePath.filename}`}
               className="postPic"
               alt="Post"
             />
           ) : post.postPicturePath.contentType === "video/mp4" ? (
             <video
-              src={`http://localhost:6001/stream/${post.postPicturePath.filename}`}
+              src={`https://socialmedia-z9uq.onrender.com/stream/${post.postPicturePath.filename}`}
               className="postPic"
               controls
             ></video>

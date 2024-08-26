@@ -32,7 +32,7 @@ export const Messages = ({ friend, handleClick }) => {
 
   const sendMessages = async () => {
     try {
-      const res = await fetch(`http://localhost:6001/message/send/${friend._id}`, {
+      const res = await fetch(`https://socialmedia-z9uq.onrender.com/message/send/${friend._id}`, {
         method: 'POST',
         headers: {
           'content-type': 'application/json'
@@ -60,7 +60,7 @@ export const Messages = ({ friend, handleClick }) => {
 
   const getMessages = async () => {
     try {
-      const res = await fetch(`http://localhost:6001/message/${userId}/${friend._id}`, {
+      const res = await fetch(`https://socialmedia-z9uq.onrender.com/message/${userId}/${friend._id}`, {
         method: 'GET',
         headers: {
           'content-type': 'application/json'
@@ -113,7 +113,7 @@ export const Messages = ({ friend, handleClick }) => {
           <IoArrowBackSharp />
         </div>
         <img
-          src={`http://localhost:6001/streamId/${friend.userPic}`}
+          src={`https://socialmedia-z9uq.onrender.com/streamId/${friend.userPic}`}
           className="h-[45px] w-[45px] rounded-full object-cover"
           alt="pic"
         />
@@ -133,7 +133,7 @@ export const Messages = ({ friend, handleClick }) => {
           m.message ?
             <div key={index} className={`flex items-start  space-x-2 ${m.senderId === userId ? 'justify-end' : 'justify-start'}`}>
               {bool?<img
-                src={m.senderId === userId ? `http://localhost:6001/streamId/${user.userPic}` : `http://localhost:6001/streamId/${friend.userPic}`}
+                src={m.senderId === userId ? `https://socialmedia-z9uq.onrender.com/streamId/${user.userPic}` : `https://socialmedia-z9uq.onrender.com/streamId/${friend.userPic}`}
                 className="h-[38px] w-[38px] rounded-full object-cover"
                 alt="User"
               />:null}

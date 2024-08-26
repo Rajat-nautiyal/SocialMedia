@@ -16,7 +16,7 @@ export const UsersFunc = () => {
 
   const getUsers = async () => {
     try {
-      const res = await fetch('http://localhost:6001/users', {
+      const res = await fetch('https://socialmedia-z9uq.onrender.com/users', {
         method: 'GET',
         headers: {
           'content-type': 'application/json',
@@ -53,7 +53,7 @@ export const UsersFunc = () => {
         <div className='flex-1' onClick={() => getUserpost(user)}>
           <img 
             className='h-[170px] w-full object-cover mx-auto rounded-lg' 
-            src={`http://localhost:6001/streamId/${user.userPic}`} 
+            src={`https://socialmedia-z9uq.onrender.com/streamId/${user.userPic}`} 
             alt={`${user.firstname}`} 
           />
         </div>

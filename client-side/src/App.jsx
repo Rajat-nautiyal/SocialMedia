@@ -13,7 +13,7 @@ function App(){
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        const response = await fetch('http://localhost:6001/auth/verify', {
+        const response = await fetch('https://socialmedia-z9uq.onrender.com/auth/verify', {
           method: 'GET',
           credentials: 'include' // Include cookies in the request
         });

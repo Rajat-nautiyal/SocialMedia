@@ -27,7 +27,7 @@ export const GetStory = ({handleClick, story}) => {
             <div className="flex justify-between items-center mb-2">
                 <div className="flex items-center space-x-2">
                     <img 
-                    src={`http://localhost:6001/streamId/${story.userId.userPic}`} 
+                    src={`https://socialmedia-z9uq.onrender.com/streamId/${story.userId.userPic}`} 
                     className="h-12 w-12 object-cover border-2 border-blue-700 rounded-full"
                     />
                     <div className="text-white text-lg font-semibold">
@@ -48,7 +48,7 @@ export const GetStory = ({handleClick, story}) => {
                 </div>:null}
                 
                 <img ref={imageRef}
-                    src={story.postPicturePath?`http://localhost:6001/streamId/${story.postPicturePath}`:generalBg}
+                    src={story.postPicturePath?`https://socialmedia-z9uq.onrender.com/streamId/${story.postPicturePath}`:generalBg}
                     className={story.postPicturePath?`h-[80%] ${imgHeight<860?`object-cover`: `object-contain`} w-full rounded-lg`:`h-[80%] object-scale-cover w-full rounded-lg`}
                 />
             </div>

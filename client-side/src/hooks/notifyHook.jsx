@@ -7,7 +7,7 @@ export const NotifyHook = () => {
     const userId = useSelector((state)=>state.userSlice.user._id);
     const getNotify = async()=>{
         try{
-          const res = await fetch(`http://localhost:6001/notify/${userId}`,{
+          const res = await fetch(`https://socialmedia-z9uq.onrender.com/notify/${userId}`,{
             method: 'GET',
             headers:{
               'content-type':'application/json'
@@ -32,7 +32,7 @@ export const useUpdateNotifyHook = () => {
 
   const patchNotify = async () => {
     try {
-      await fetch(`http://localhost:6001/notify/update/${userId}`, {
+      await fetch(`https://socialmedia-z9uq.onrender.com/notify/update/${userId}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
