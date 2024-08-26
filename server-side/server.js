@@ -1,7 +1,6 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
-import User from '../server-side/models/user.js'
 import cookieParser from 'cookie-parser';
 import multer from 'multer';
 import helmet from 'helmet';
@@ -25,8 +24,6 @@ import {streamFile, streamFileId} from './middleware/stream.js'
 import { sendMessage} from './controller/message.js'
 
 const app = express();
-
-app.use(express.static(path.join(__dirname, 'client/build')));
 
 app.use(cors({ origin: ['http://localhost:5173'],credentials: true } ));
 const server = createServer(app);
@@ -70,8 +67,8 @@ app.post('/post/story',authUser, upload.single('image'), createStory);
 
 const PORT = process.env.PORT || 5000;
 
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname + '/client/build/index.html'));
+app.get('/', (req, res) => {
+  res.json({message:'deployment working'});
 });
 
 server.listen(PORT, () => {
