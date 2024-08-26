@@ -68,11 +68,6 @@ app.post('/post/story',authUser, upload.single('image'), createStory);
 
 const PORT = process.env.PORT || 5000;
 
-app.get('/', (req, res) => {
-  res.json({message:'deployment working'});
-});
-
-
 server.listen(PORT, () => {
     console.log(`Server connected on port ${PORT}`);
 });
