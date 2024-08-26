@@ -3,7 +3,6 @@ import  {UsersFunc} from '../../component/users.jsx'
 import { useMediaQuery } from '@react-hook/media-query';
 import {Navbar} from '../../component/navbar/navbar.jsx'
 import {Profile} from '../../component/profile.jsx'
-import {Friends} from '../../component/friends.jsx'
 import {ChatUsers} from '../messages/messages.jsx'
 import {Notify} from '../notify/notify.jsx'
 import { useDispatch, useSelector } from 'react-redux';

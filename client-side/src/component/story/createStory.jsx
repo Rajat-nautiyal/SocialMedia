@@ -36,10 +36,11 @@ export const CreateStory = ({handleStory}) => {
       // console.log(file)
       if(!description&&file.size===0&&file.name==='') return;
       try {
-          const res = await fetch('http://192.168.0.130:6001/post/story', {
+          const res = await fetch('http://localhost:6001/post/story', {
             method: 'POST',
             headers: { Authorization: `Bearer ${token}` },
             body: formData,
+            credentials: 'include', 
           });
           const data = await res.json();
           setCreateStory(false);
@@ -58,7 +59,7 @@ export const CreateStory = ({handleStory}) => {
     <div onClick ={()=>setCreateStory(!createStory)} 
       className={`relative ${stories[0]?`w-[30%]`:`w-[122px]`} flex items-center justify-center
       transition-all cursor-pointer overflow-x-auto max-md:h-[25vh] flex-shrink-0 hover:scale-105`}>
-      <img src={`http://192.168.0.130:6001/streamId/${userPic}`} 
+      <img src={`http://localhost:6001/streamId/${userPic}`} 
         className="h-[100%] w-[100%] transition-all rounded-xl" 
         alt="create story" 
       />

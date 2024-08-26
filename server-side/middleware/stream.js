@@ -4,8 +4,6 @@ import mongoose from 'mongoose';
 export const streamFile =async(req,res)=>{
     try{    
             const fileData = await gfs.files.findOne({filename:req.params.filename});
-            
-            // console.log(fileData)
             const readStream = gridfsBucket.openDownloadStream(fileData._id);
             readStream.pipe(res);
         }catch(error){

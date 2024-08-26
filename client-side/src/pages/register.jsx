@@ -2,7 +2,6 @@ import React, {useState, useEffect} from 'react'
 import { useForm } from "react-hook-form";
 import { useNavigate } from 'react-router-dom';
 import { HiPhoto } from "react-icons/hi2";
-import { MdPhotoLibrary } from "react-icons/md";
 
 export const Register = () => {
     const {register, handleSubmit, formState: { errors }} = useForm();
@@ -24,12 +23,11 @@ export const Register = () => {
                 formData.append(key, data[key]);
             }
         }
-        const res = await fetch('http://192.168.0.130:6001/auth/register', {
+        const res = await fetch('http://localhost:6001/auth/register', {
             method: 'POST',
             body: formData
         });
         const responseData = await res.json();
-        console.log('form data is', responseData);
         navigate('/login')
 
     } catch (error) {

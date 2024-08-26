@@ -19,8 +19,6 @@ export const getStories = async(req,res)=>{
 export const createStory = async(req,res)=>{
     try{
         const {userId, description} = req.body;
-        console.log(userId, description)
-        console.log('image', req.file)
         const newStory = new Story({
             userId:userId,
             postPicturePath: req.file? req.file.id:null,

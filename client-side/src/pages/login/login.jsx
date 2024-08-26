@@ -9,6 +9,8 @@ export const Login = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const [message, setMessage] = useState(null);
+    const [inputValue, setInputValue] = useState('demo@gmail.com');
+    const [passwordValue, setPasswordValue] = useState('123456');
 
     const handleClick =()=>{
         navigate('/signup')
@@ -16,7 +18,7 @@ export const Login = () => {
     const submitLogin = async(data) => {
       try {
         console.log(data)
-        const res = await fetch('http://192.168.0.130:6001/auth/login', {
+        const res = await fetch('http://localhost:6001/auth/login', {
             method: 'POST',
             headers:{
                 'Content-Type': 'application/json'
@@ -25,16 +27,11 @@ export const Login = () => {
             credentials: 'include'
         });
         const logInData = await res.json();
-        console.log('data')
         if(logInData.message){
             setMessage(logInData.message)
         }
-        dispatch(setLogin({
-            user:logInData.user, token:logInData.token
-        }))
+        dispatch(setLogin(logInData.user))
         localStorage.setItem('darkMode', JSON.stringify(false));
-        // dispatch(setMode(false))
-        console.log('form data is', logInData);
     } catch (error) {
         console.error('Error submitting form:', error);
     }
@@ -42,7 +39,7 @@ export const Login = () => {
     
   return (
     <>
-    <div className="flex items-center justify-center min-h-screen bg-gradient-to-r from-blue-500 to-indigo-600">
+    <div className="flex items-center justify-center min-h-[100dvh] bg-gradient-to-r from-blue-500 to-indigo-600">
         <div className="bg-white p-8 rounded-lg shadow-lg max-w-sm w-full">
         <h2 className="text-2xl font-semibold text-center text-gray-800 mb-6">Login</h2>
         <form onSubmit={handleSubmit(submitLogin)} className="space-y-5">
@@ -50,14 +47,16 @@ export const Login = () => {
               type="email" name="email"
               {...register("email", { required: true, minLength: 5 })}
               placeholder="Enter your email"
-              onChange={()=>setMessage(null)}
+              value={inputValue}
+              onChange={(e)=>{setMessage(null),setInputValue(e.target.value)}}
               className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
             <input 
                 type="password" name="password"
                 {...register("password", { required: true })}
                 placeholder="Password"
-                onChange={()=>setMessage(null)}
+                value={passwordValue}
+                onChange={(e)=>{setMessage(null),setPasswordValue(e.target.value)}}
                 className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
             <button type="submit" 

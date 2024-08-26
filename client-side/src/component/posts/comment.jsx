@@ -19,11 +19,12 @@ export const Comment = ({post}) => {
     const postComment = async(e)=>{
         e.preventDefault()
         try{
-          const res = await fetch(`http://192.168.0.130:6001/post/add/comment/${post._id}`,{
+          const res = await fetch(`http://localhost:6001/post/add/comment/${post._id}`,{
             method: 'PATCH',
             headers:{
               'content-type':'application/json'
             },
+            credentials: 'include', 
             body: JSON.stringify({userId:userId, comment:comment})
 
           })
@@ -38,11 +39,12 @@ export const Comment = ({post}) => {
 
       const deleteComment = async(commentId)=>{
         try{
-          const res = await fetch(`http://192.168.0.130:6001/post/delete/comment/${post._id}`,{
+          const res = await fetch(`http://localhost:6001/post/delete/comment/${post._id}`,{
             method: 'PATCH',
             headers:{
               'content-type':'application/json'
             },
+            credentials: 'include', 
             body: JSON.stringify({commentId:commentId})
 
           })
@@ -94,7 +96,7 @@ export const Comment = ({post}) => {
                 <div key={index} className='mb-4' onClick={() => OnClickComment(userId._id, _id)}>
                   <div className='flex items-start mb-2'>
                     <img 
-                      src={`http://192.168.0.130:6001/streamId/${userId.userPic}`} 
+                      src={`http://localhost:6001/streamId/${userId.userPic}`} 
                       className='w-10 h-10 rounded-full mr-3 object-cover' 
                       alt="Post" 
                     />

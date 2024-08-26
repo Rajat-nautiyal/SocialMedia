@@ -1,13 +1,10 @@
 import React, { useEffect,useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux';
-import {getUserPost} from '../../hooks/getUserHook'
 import { BsChatLeftDots } from "react-icons/bs";
 import { MdOutlineMarkUnreadChatAlt } from "react-icons/md";
 import {Messages} from '../../component/messages.jsx'
 import { socketHook } from '../../hooks/socketHook.jsx';
-import NotifySound from "../../../public/assets/notification.mp3"
 import NotifySoundTwo from "../../../public/assets/tap-notification-180637.mp3"
-import { useMediaQuery } from '@react-hook/media-query';
 import { setMessagePageBool } from '../../state/index.jsx';
 import { IoArrowBackSharp } from "react-icons/io5";
 
@@ -15,17 +12,15 @@ export const ChatUsers = () => {
   const [friend, setFriend] = useState(null)
   const [lastMessage, setLastMessage] = useState(null)
   const [newMessage, setNewMessage] = useState(null)
-  const isMobile = useMediaQuery('(max-width: 768px)');
   const dispatch = useDispatch();
-
   const originalfriends = useSelector((state)=>state.userSlice.originalfriends);
   const user = useSelector((state)=>state.userSlice.user);
   const messagePageBool = useSelector((state)=>state.userSlice.messagePageBool);
   const mode = useSelector((state)=>state.userSlice.mode);
   const userId = useSelector((state)=>state.userSlice.user._id);
   const onlineUsers = useSelector((state)=>state.userSlice.onlineUsers);
-  // const socketLastMessage = useSelector((state)=>state.userSlice.socketLastMessage);
   const socket = socketHook();
+  
   const handleClick =()=>{
     setFriend(null)
   }
@@ -35,14 +30,15 @@ export const ChatUsers = () => {
   }
   const getLastMessages = async () => {
     try {
-      const res = await fetch(`http://192.168.0.130:6001/message/${userId}`, {
+      const res = await fetch(`http://localhost:6001/message/${userId}`, {
         method: 'GET',
         headers: {
           'content-type': 'application/json',
         },
+        credentials: 'include', // Include cookies with the request
+
       });
       const data = await res.json();
-      // console.log(data);
       setLastMessage(data)
     } catch (e) {
       console.log(e.message);
@@ -52,7 +48,6 @@ export const ChatUsers = () => {
     socket.on("new-message", (data) => {
       if (data.message && data.senderId) {
         setNewMessage(data);
-        // console.log(data.senderId)
         if (data.receiverId === userId||data.senderId === userId) {
             const sound = new Audio(NotifySoundTwo);
             sound.play();
@@ -71,7 +66,7 @@ export const ChatUsers = () => {
 
   return (
     <div className='w-full bg-[rgb(96,96,96)] max-md:h-[100dvh] max-md:rounded-none
-     overflow-y-auto h-full rounded-xl p-4' id={mode?'darkChatBg':''}>
+     overflow-y-auto h-full rounded-xl p-4 scrollbar-hide'  id={mode?'darkChatBg':''}>
       <div className='text-[25px] flex items-center font-semibold border-b-2
          text-white border-blue-500 mb-4 '>
         <IoArrowBackSharp onClick={handleClickTwo} className='mr-2 hover:bg-gray-600 rounded-full'/>
@@ -83,10 +78,10 @@ export const ChatUsers = () => {
       ) : null}
 
       {/* Online Users Scrollable Section(check if not) */}
-      <div className="flex flex-row overflow-x-auto space-x-4 pb-4">
+      <div className="flex flex-row overflow-x-auto scrollbar-hide space-x-4 pb-4">
           <div className="flex flex-col hover:cursor-pointer items-center space-y-2">
               <img 
-                src={`http://192.168.0.130:6001/streamId/${user.userPic}`} 
+                src={`http://localhost:6001/streamId/${user.userPic}`} 
                 className='h-[45px] w-[45px] hover:h-[48px] hover:w-[48px] transition-all rounded-full object-cover' 
                 alt='You'
               />
@@ -98,7 +93,7 @@ export const ChatUsers = () => {
             <div key={u._id} onClick={() => setFriend(u)}
             className="flex flex-col hover:cursor-pointer items-center space-y-2">
               <img 
-                src={`http://192.168.0.130:6001/streamId/${u.userPic}`} 
+                src={`http://localhost:6001/streamId/${u.userPic}`} 
                 className='h-[45px] w-[45px] hover:h-[48px] hover:w-[48px] transition-all rounded-full object-cover' 
                 alt={`${u.firstname}`} 
               />
@@ -124,7 +119,7 @@ export const ChatUsers = () => {
                hover:bg-gray-100 transition duration-150 ease-in-out cursor-pointer"
             >
               <img
-                src={`http://192.168.0.130:6001/streamId/${u.userPic}`}
+                src={`http://localhost:6001/streamId/${u.userPic}`}
                 className="h-[45px] w-[45px] rounded-full object-cover"
                 alt={`${u.firstname}`}
               />
@@ -160,7 +155,7 @@ export const ChatUsers = () => {
              hover:bg-gray-100 transition duration-150 ease-in-out cursor-pointer"
           >
             <img
-              src={`http://192.168.0.130:6001/streamId/${u.userPic}`}
+              src={`http://localhost:6001/streamId/${u.userPic}`}
               className="h-[45px] w-[45px] rounded-full object-cover"
               alt={`${u.firstname}`}
             />

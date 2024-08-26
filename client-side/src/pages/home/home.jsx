@@ -9,14 +9,16 @@ import {Notify} from '../notify/notify.jsx'
 import './home.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { socketHook } from '../../hooks/socketHook.jsx';
-import {setOnlineUsers,setFriends} from '../../state/index.jsx';
+import {setOnlineUsers} from '../../state/index.jsx';
 import {NotifyHook} from '../../hooks/notifyHook.jsx';
 import { LastMessageHook } from '../../hooks/getLastMessage.jsx';
+import { FetchProfileUser } from '../../hooks/fetchFriends.jsx';
 
 export const Home = () => {
   const isMobile = useMediaQuery('(max-width: 768px)');
   const userId = useSelector((state)=>state.userSlice.user._id)
   const lastMessage = LastMessageHook();
+  const  fetchProfileUser = FetchProfileUser(); 
   const mode = useSelector((state)=>state.userSlice.mode);
   const messagePageBool = useSelector((state)=>state.userSlice.messagePageBool);
   const notifyPageBool = useSelector((state)=>state.userSlice.notifyPageBool);
@@ -36,9 +38,9 @@ export const Home = () => {
 
   useEffect(()=>{
     if(profileUser===null) return;
-    document.documentElement.scrollTop = 0;
-    document.body.scrollTop = 0;      // Scrolls  <body> element
-    const mainPageElement = document.getElementById('mainPage');
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;      // Scrolls  <body> element
+      const mainPageElement = document.getElementById('mainPage');
     if (mainPageElement) {
       mainPageElement.scrollTop = 0;
     }
@@ -48,31 +50,11 @@ export const Home = () => {
   useEffect(()=>{
     lastMessage()
     getNotify()        
-    const fetchProfileUser = async () => {
-      if (profileUser === null) {
-        try {
-          const response = await fetch(`http://192.168.0.130:6001/users/${userId}`, {
-            method: 'GET',
-            headers: {
-              'content-type': 'application/json',
-            },
-            credentials: 'include', // Include cookies with the request
-          });
-          if (response.ok) {
-            const data = await response.json();
-            dispatch(setFriends({ friends: data.friendsData }));
-          } else {
-            console.error('Failed to fetch user data');
-          }
-        } catch (e) {
-          console.error('Error:', e);
-        }
-      }
-    };
-  
     fetchProfileUser();
-
-    },[])
+    },[])  
+    useEffect(()=>{
+      document.body.classList.toggle('dark-mode', mode);
+    },[mode])
 
   return (
     <>

@@ -48,8 +48,6 @@ export const getAllFeeds = async(req,res)=>{
 export const getUserPosts = async(req,res)=>{
     try{
         const userId = req.params.userId;
-        // const id = new mongoose.Types.ObjectId(userId)
-        console.log(userId)
         const userPosts = await Post.find({userId:userId})  
         .populate({path: 'postPicturePath'})
         .populate({
@@ -60,7 +58,6 @@ export const getUserPosts = async(req,res)=>{
                 path: 'comments.userId',
                 select: 'firstname lastname userPic _id'
         }).sort({ createdAt: 1 });
-        console.log(userPosts)
         res.status(200).json(userPosts);
     }catch(err){
         res.status(404).json({message:err.message})
@@ -90,9 +87,6 @@ export const postLike = async(req,res)=>{
         if (!post) {
             return res.status(404).json({ message: "Post not found" });
         }
-        // console.log(id)
-        // console.log(post._id)
-
         const isLiked = post.likes.get(userId);
         if(isLiked){
             post.likes.delete(userId)
@@ -108,7 +102,6 @@ export const postLike = async(req,res)=>{
                         notification:`${user.firstname} ${user.lastname} has liked on your post`,
                         actionPic:user.userPic
             })
-            console.log(notification)
             await notification.save();
             await post.save();
             res.status(200).json({message:`${user.firstname} liked your Post`,post});
@@ -178,7 +171,6 @@ export const deleteComment = async(req,res)=>{
                                 path: 'comments.userId',
                                 select: 'firstname lastname userPic _id'
                         });
-                        console.log(post)
         res.status(201).json({post})
     }catch(err){
         res.status(404).json({message:err.message})

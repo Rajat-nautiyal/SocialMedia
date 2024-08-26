@@ -17,7 +17,7 @@ export const Profile = () => {
         <div className='w-[92%] px-3 max-md:w-[95%] font-inter max-h-full max-md:mt-6 
          mx-auto rounded-lg shadow-md flex flex-col bg-white py-5 overflow-auto scrollbar-hide'>
           <img 
-            src={`http://192.168.0.130:6001/streamId/${profileUser.userPic}`} 
+            src={`http://localhost:6001/streamId/${profileUser.userPic}`} 
             className='min-w-[20%] max-h-[40vh]  max-md:rounded-3xl max-md:object-contain 
              max-md:max-h-[30vh] mx-auto rounded-xl mb-4 ' 
             alt="Profile" 
@@ -66,7 +66,7 @@ export const Profile = () => {
         <div className='w-[92%] px-3 max-md:w-[95%] font-inter max-h-full max-md:mt-6 
          mx-auto rounded-lg shadow-md flex flex-col bg-white py-5 overflow-auto scrollbar-hide'>
           <img 
-            src={`http://192.168.0.130:6001/streamId/${logInUser.userPic}`} 
+            src={`http://localhost:6001/streamId/${logInUser.userPic}`} 
             className='min-w-[20%] max-h-[40vh]  max-md:rounded-3xl max-md:object-contain 
              max-md:max-h-[30vh] mx-auto rounded-xl mb-4 ' 
             alt="Profile" 

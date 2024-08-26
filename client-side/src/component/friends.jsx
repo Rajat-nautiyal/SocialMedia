@@ -2,7 +2,7 @@ import React, { useEffect,useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux';
 import { setFriends } from '../state/index.jsx';
 import {FollowUser} from '../hooks/addFriendHook.jsx'
-import {getUserPost} from '../hooks/getUserHook.jsx'
+import {GetUserPost} from '../hooks/getUserHook.jsx'
 
 export const Friends = () => {
   const frnds = useSelector((state)=>state.userSlice.user.friends);
@@ -14,31 +14,32 @@ export const Friends = () => {
   const dispatch = useDispatch();
   const profileUser = useSelector((state)=>state.userSlice.profileUser);
   const followUser = FollowUser(); // to add/remove friend
-  const getUserpost = getUserPost(); //to get user posts
+  const getUserpost = GetUserPost(); //to get user posts
 
   const getUserFriends =async()=>{
       try{
         let res;
         if(profileUser ===null){
-          res = await fetch(`http://192.168.0.130:6001/users/${userId}`,{
+          res = await fetch(`http://localhost:6001/users/${userId}`,{
             method: 'GET',
             headers:{
               'content-type':'application/json'
             },
+            credentials: 'include', // Include cookies with the request
           })
         }else{
-          res = await fetch(`http://192.168.0.130:6001/users/${profileUser._id}`,{
+          res = await fetch(`http://localhost:6001/users/${profileUser._id}`,{
             method: 'GET',
             headers:{
               'content-type':'application/json'
             },
+            credentials: 'include',
           })
 
         }
         const data = await res.json()
         // console.log(data) //got friends and current user
         dispatch(setFriends({friends:data.friendsData}))
-        console.log('getUserFriends running')
       } catch(e){
           console.log(e.message)
       }
@@ -50,20 +51,20 @@ export const Friends = () => {
   return (
     <div className='w-[100%] max-tl:w-[80%] p-4 max-md:max-h-[50vh] mb-2 overflow-auto scrollbar-hide max-md:mt-6'>
       <h2 className={mode ? 'text-[20px] text-white font-medium py-3' : 'text-[20px] font-medium py-3'}>Friends</h2>
-      {frnds.friends && frnds.friends.length===0?
+      {frnds&&frnds.friends && frnds.friends.length===0?
         <div className={mode?`text-white`:``}>
           No Friends to show
         </div>:null}
       <div className='max-md:grid max-md:grid-cols-2 gap-3 font-montserrat space-y-4 
        max-md:space-y-0 max-md:gap-y-3'>
-        {frnds.friends && frnds.friends.map((u) => (
+        {frnds && frnds.friends && frnds.friends.map((u) => (
           <div 
             key={u._id} 
             className='bg-white rounded-md shadow-md p-4 flex items-center max-md:flex-col space-x-4 max-h-64 h-full'
           >
             <img
               onClick={() => { getUserpost(u) }}
-              src={`http://192.168.0.130:6001/streamId/${u.userPic}`}
+              src={`http://localhost:6001/streamId/${u.userPic}`}
               className='h-16 w-16 max-md:h-20 max-md:w-20 rounded-lg object-cover'
               alt={`${u.firstname} ${u.lastname}`}
             />

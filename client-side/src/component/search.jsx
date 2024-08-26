@@ -1,6 +1,6 @@
 import React,{useState} from 'react'
 import { RxCross2 } from "react-icons/rx";
-import {getUserPost} from '../hooks/getUserHook.jsx'
+import {GetUserPost} from '../hooks/getUserHook.jsx'
 import { CiSearch } from "react-icons/ci";
 import { useDispatch, useSelector } from 'react-redux';
 import { useMediaQuery } from '@react-hook/media-query';
@@ -10,7 +10,7 @@ export const Search = () => {
   const [inputValue, setInputValue] = useState('');
   const [mobSearch, setMobSearch] = useState(false);
   const [foundedUser, setFoundedUser]= useState(null);
-  const getUserpost = getUserPost(); //to get user posts
+  const getUserpost = GetUserPost(); //to get user posts
   const mode = useSelector((state)=>state.userSlice.mode);
   const isMobile = useMediaQuery('(max-width: 768px)');
   
@@ -20,11 +20,12 @@ export const Search = () => {
   const getUser =async(inputValue)=>{
     try{
       // console.log(user)
-      const res = await fetch(`http://192.168.0.130:6001/users/${inputValue}`,{
+      const res = await fetch(`http://localhost:6001/users/${inputValue}`,{
         method: 'GET',
         headers:{
           'content-type':'application/json'
         },
+        credentials: 'include', 
       })
       const data = await res.json()
       if(data.user){
@@ -91,7 +92,7 @@ export const Search = () => {
           <div className='absolute w-[250px] p-2 bg-white flex items-center 
           rounded-xl shadow-xl '>
             <img 
-              src={`http://192.168.0.130:6001/streamId/${foundedUser.userPic}`} 
+              src={`http://localhost:6001/streamId/${foundedUser.userPic}`} 
               className='w-12 h-12 rounded-full object-cover mr-3' 
               alt={`${foundedUser.firstname} ${foundedUser.lastname}`} 
             />

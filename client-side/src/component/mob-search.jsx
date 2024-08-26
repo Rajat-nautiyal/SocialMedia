@@ -1,13 +1,14 @@
-import React,{useState} from 'react'
+import React from 'react'
 import { CiSearch } from "react-icons/ci";
 import { useDispatch, useSelector } from 'react-redux';
-import { useMediaQuery } from '@react-hook/media-query';
 import { IoArrowBackSharp } from "react-icons/io5";
 import { RxCross2 } from "react-icons/rx";
+import {GetUserPost} from '../hooks/getUserHook.jsx'
 
 export const MobSearch = ({handleKeyDown, setInputValue, foundedUser, inputValue, handleClickMobSearch,setFoundedUser}) => {
     const mode = useSelector((state)=>state.userSlice.mode);
-  
+    const getUserPost =GetUserPost();
+
   return (
     <div className='w-[100vw] flex justify-center items-center h-screen top-[-1dvh] left-[-4px] z-50 absolute
      bg-black bg-opacity-65 '
@@ -46,11 +47,11 @@ export const MobSearch = ({handleKeyDown, setInputValue, foundedUser, inputValue
           <div className='relative w-[95%] mt-4 mx-auto p-2 bg-white flex items-center 
           rounded-xl shadow-xl '>
             <img 
-              src={`http://192.168.0.130:6001/streamId/${foundedUser.userPic}`} 
+              src={`http://localhost:6001/streamId/${foundedUser.userPic}`} 
               className='w-12 h-12 rounded-full object-cover mr-3' 
               alt={`${foundedUser.firstname} ${foundedUser.lastname}`} 
             />
-            <div onClick={() => {getUserpost(foundedUser)}} className='flex flex-col'>
+            <div onClick={() => {getUserPost(foundedUser),handleClickMobSearch()}} className='flex flex-col'>
               <span className='text-lg font-semibold' id={mode?'darkSearch':''}>
                 {foundedUser.firstname} {foundedUser.lastname}
               </span>

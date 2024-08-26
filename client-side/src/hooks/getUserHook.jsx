@@ -4,7 +4,7 @@ import {setProfileUser} from '../state/index.jsx'
 import { useNavigate } from 'react-router-dom';
 import { setPosts } from '../state/index.jsx';
 
-export const getUserPost = ()=>{
+export const GetUserPost = ()=>{
     
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -12,11 +12,12 @@ export const getUserPost = ()=>{
     const getPost =async(user)=>{
       try{
         dispatch(setProfileUser(user))
-        const res = await fetch(`http://192.168.0.130:6001/post/${user._id}`,{
+        const res = await fetch(`http://localhost:6001/post/${user._id}`,{
           method: 'GET',
           headers:{
             'content-type':'application/json'
           },
+          credentials: 'include', 
         })
         const data = await res.json() 
         dispatch(setPosts({posts:data}))

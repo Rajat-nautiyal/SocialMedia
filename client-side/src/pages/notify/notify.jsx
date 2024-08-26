@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import {FormatTime} from "../../utils/formatDate.js"
 import {useUpdateNotifyHook} from "../../hooks/notifyHook.jsx"
-import {getUserPost} from '../../hooks/getUserHook.jsx'
+import {GetUserPost} from '../../hooks/getUserHook.jsx'
 import { IoArrowBackSharp } from "react-icons/io5";
 import {setNotifyPageBool} from '../../state/index.jsx'
 
@@ -10,7 +10,7 @@ export const Notify = () => {
   const notifications = useSelector((state)=>state.userSlice.notifications);
   const mode = useSelector((state)=>state.userSlice.mode);
   const dispatch = useDispatch();
-  const getUser = getUserPost(); //to get user posts
+  const getUser = GetUserPost(); //to get user posts
   const notifyPageBool = useSelector((state)=>state.userSlice.notifyPageBool);
 
   const handleClick =()=>{
@@ -36,7 +36,7 @@ export const Notify = () => {
           <div key={n._id} onClick={()=>{getUser(n.actionId),handleClick()}}
            className="flex items-center space-x-4 bg-white p-3 rounded-lg shadow-md">
             <img
-              src={`http://192.168.0.130:6001/streamId/${n.actionPic}`}
+              src={`http://localhost:6001/streamId/${n.actionPic}`}
               className='h-[45px] w-[45px] rounded-full object-cover'
               alt='pic'
             />

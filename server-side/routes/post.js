@@ -9,10 +9,10 @@ router.get('/', getAllFeeds);
 //get a particular user posts
 router.get('/:userId' , getUserPosts);
 // post like
-router.patch('/like/:id', postLike)
+router.patch('/like/:id',authUser, postLike)
 //push comments
-router.patch('/add/comment/:id', pushComment)
+router.patch('/add/comment/:id',authUser, pushComment)
 //delete comments
-router.patch('/delete/comment/:id', deleteComment)
+router.patch('/delete/comment/:id', authUser,deleteComment)
 
 export default router;

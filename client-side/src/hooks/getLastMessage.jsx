@@ -6,11 +6,12 @@ export const LastMessageHook = ()=>{
     const userId = useSelector((state)=>state.userSlice.user._id);
     const getLastMessages = async () => {
         try {
-          const res = await fetch(`http://192.168.0.130:6001/message/${userId}`, {
+          const res = await fetch(`http://localhost:6001/message/${userId}`, {
             method: 'GET',
             headers: {
               'content-type': 'application/json',
             },
+            credentials: 'include', 
           });
           const data = await res.json();
           // console.log(data);

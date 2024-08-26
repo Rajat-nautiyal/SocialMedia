@@ -4,7 +4,6 @@ import { Post } from './post.jsx';
 import {Story} from '../story/story.jsx'
 import { useDispatch, useSelector } from 'react-redux';
 import { setPosts } from '../../state/index.jsx';
-import { useParams } from 'react-router-dom';
 
 export const Posts = () => {
   const [createdPost, setCreatedPost]= useState(false);
@@ -12,20 +11,19 @@ export const Posts = () => {
   const dispatch = useDispatch();
   const profileUser = useSelector((state)=>state.userSlice.profileUser);
   const mode = useSelector((state)=>state.userSlice.mode);
-
   // const userId = useSelector((state)=>state.userSlice.user._id);
-  const params = useParams();
   const handleClick =()=>{
     setCreatedPost(!createdPost);
   }
 
   const getPosts = async()=>{
     try{
-      const res = await fetch('http://192.168.0.130:6001/post',{
+      const res = await fetch('http://localhost:6001/post',{
         method: 'GET',
         headers:{
           'content-type':'application/json'
         },
+        credentials: 'include', 
       })
       const data = await res.json()
       // console.log(data)

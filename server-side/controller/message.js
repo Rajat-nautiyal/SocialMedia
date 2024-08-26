@@ -4,11 +4,8 @@ import Message from "../models/message.js";
 
 export const sendMessage =async(req,res)=>{
     const friendId = req.params.id;
-    // const friendId = new mongoose.Types.ObjectId(req.params.id)
     const {message, userId} = req.body;
     let fileId = null
-    // console.log(message, userId)
-    // console.log(friendId)
     if(req.file){
         fileData = req.file.id
     }
@@ -30,9 +27,7 @@ export const sendMessage =async(req,res)=>{
         userConversation.messages.push(newMessage._id);
     }
     await Promise.all([userConversation.save(), newMessage.save()]);
-    res.status(201).json({message:'message saved'})
-    // socket real-time chat code will be here
-    
+    res.status(201).json({message:'message saved'})    
 }
 
 export const getMessages =async(req, res)=>{
@@ -47,15 +42,12 @@ export const getMessages =async(req, res)=>{
         // console.log(userConversation.messages.slice(-1)[0])
         const lastMessage = userConversation.messages.slice(-1)[0]
         const userId = new mongoose.Types.ObjectId(id)
-        console.log(userId)
-        console.log(lastMessage.receiverId)
         if(lastMessage.receiverId.equals(userId)){ //note:-condition
             await Message.updateOne({             //lastmessage.recievrId === userId 
                 _id:lastMessage._id             //doesn't work in case of ObjectId    
             },
                 {$set:{read:true}
             });
-            console.log('updated')
         }
 
         res.status(200).json(userConversation);    

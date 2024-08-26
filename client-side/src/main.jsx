@@ -7,7 +7,6 @@ import store from './state/store.jsx'
 
 const root = ReactDOM.createRoot(document.getElementById('root')); 
 
-// store.subscribe(()=>console.log(store.getState()));
 root.render(
     <Provider store = {store}>
         <App />

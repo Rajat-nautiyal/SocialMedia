@@ -1,6 +1,5 @@
 import mongoose from "mongoose";
 import Notify from "../models/notify.js";
-import User from "../models/user.js"
 
 export const getNotification =async(req, res)=>{
     try{
@@ -26,7 +25,6 @@ export const updateNotifications =async(req, res)=>{
                             read:false },
                             {$set:{read:true}
                         });
-        // res.status(200).json(notifications);
     }catch(err){
         res.status(409).json({message:err.message})
     }

@@ -19,7 +19,6 @@ export const Messages = ({ friend, handleClick }) => {
   const userId = useSelector((state) => state.userSlice.user._id);
   const room = [userId, friend._id].sort().join('_');
   const chatUser ={}
-  const element = document.getElementById('chats');
 
   const smoothScroll =()=>{
     const element = document.getElementById('chats');
@@ -33,7 +32,7 @@ export const Messages = ({ friend, handleClick }) => {
 
   const sendMessages = async () => {
     try {
-      const res = await fetch(`http://192.168.0.130:6001/message/send/${friend._id}`, {
+      const res = await fetch(`http://localhost:6001/message/send/${friend._id}`, {
         method: 'POST',
         headers: {
           'content-type': 'application/json'
@@ -61,7 +60,7 @@ export const Messages = ({ friend, handleClick }) => {
 
   const getMessages = async () => {
     try {
-      const res = await fetch(`http://192.168.0.130:6001/message/${userId}/${friend._id}`, {
+      const res = await fetch(`http://localhost:6001/message/${userId}/${friend._id}`, {
         method: 'GET',
         headers: {
           'content-type': 'application/json'
@@ -114,7 +113,7 @@ export const Messages = ({ friend, handleClick }) => {
           <IoArrowBackSharp />
         </div>
         <img
-          src={`http://192.168.0.130:6001/streamId/${friend.userPic}`}
+          src={`http://localhost:6001/streamId/${friend.userPic}`}
           className="h-[45px] w-[45px] rounded-full object-cover"
           alt="pic"
         />
@@ -134,7 +133,7 @@ export const Messages = ({ friend, handleClick }) => {
           m.message ?
             <div key={index} className={`flex items-start  space-x-2 ${m.senderId === userId ? 'justify-end' : 'justify-start'}`}>
               {bool?<img
-                src={m.senderId === userId ? `http://192.168.0.130:6001/streamId/${user.userPic}` : `http://192.168.0.130:6001/streamId/${friend.userPic}`}
+                src={m.senderId === userId ? `http://localhost:6001/streamId/${user.userPic}` : `http://localhost:6001/streamId/${friend.userPic}`}
                 className="h-[38px] w-[38px] rounded-full object-cover"
                 alt="User"
               />:null}

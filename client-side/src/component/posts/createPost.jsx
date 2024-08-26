@@ -5,8 +5,9 @@ import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 export const CreatePost = ({handleClick}) => {
   const[fileName, setFileName] = useState(null);
+  const[inputValue, setInputValue] = useState('');
+
   const[loading, setLoading]= useState(false);
-  const dispatch = useDispatch();
   const formRef = useRef();
   const user = useSelector((state) => state.userSlice.user);
   const userId = user._id;
@@ -27,13 +28,15 @@ export const CreatePost = ({handleClick}) => {
         formData.append('userId',userId);
         formData.append('fullname', fullname);
        try{
-         const res = await fetch('http://192.168.0.130:6001/post/createpost',{
+         const res = await fetch('http://localhost:6001/post/createpost',{
            method:'POST',
            body: formData,
+           credentials: 'include', 
          })
          const data = await res.json()
          setLoading(false)
          setFileName(null)
+         setInputValue('')
         // dispatch(updatePost({post:data}))
           handleClick()
          console.log('form data is',data)
@@ -47,10 +50,14 @@ export const CreatePost = ({handleClick}) => {
       pb-[5px] shadow-md pt-[10px] border-[1px]'>
       <form ref={formRef} onSubmit={postData} className='w-full' >
         <div className='flex space-x-1'>
-          <img src={`http://192.168.0.130:6001/streamId/${userPic}`} className='profile-pic'/>
-          <input type="text" 
-          className='postInput'
-          name="description" placeholder="Post something..." 
+          <img src={`http://localhost:6001/streamId/${userPic}`} className='profile-pic'/>
+          <input 
+            type="text" 
+            className='postInput'
+            value={inputValue}
+            onChange={(e)=>setInputValue(e.target.value)}
+            name="description" 
+            placeholder="Post something..." 
           />
           {loading?(
             <button type='submit' value='Post' className='btn'>

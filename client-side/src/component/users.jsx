@@ -1,31 +1,27 @@
 import React, { useState, useEffect } from 'react';
-import { FaUsers } from 'react-icons/fa6';
 import { useSelector,useDispatch } from 'react-redux';
-import {setProfileUser} from '../state/index.jsx'
 import { useNavigate } from 'react-router-dom';
-import { setPosts } from '../state/index.jsx';
-import {getUserPost} from '../hooks/getUserHook.jsx'
+import {GetUserPost} from '../hooks/getUserHook.jsx'
 import { FollowUser } from '../hooks/addFriendHook.jsx';
+import { FetchProfileUser } from '../hooks/fetchFriends.jsx';
 
 export const UsersFunc = () => {
   const [users, setUsers] = useState([]);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const getUserpost = getUserPost();
+  const getUserpost = GetUserPost();
   const followUser = FollowUser(); // to add/remove friend
+  const  fetchProfileUser = FetchProfileUser(); 
   const frnds = useSelector((state)=>state.userSlice.user.friends);
   const mode = useSelector((state)=>state.userSlice.mode)
 
-  // console.log(frnds)
-  // console.log(frnds.friends)
-
   const getUsers = async () => {
     try {
-      const res = await fetch('http://192.168.0.130:6001/users', {
+      const res = await fetch('http://localhost:6001/users', {
         method: 'GET',
         headers: {
           'content-type': 'application/json',
         },
+        credentials: 'include', 
       });
       const data = await res.json();
       setUsers(data);
@@ -37,6 +33,7 @@ export const UsersFunc = () => {
 
   useEffect(() => {
     getUsers();
+    fetchProfileUser();
   }, []);
 
 
@@ -56,7 +53,7 @@ export const UsersFunc = () => {
         <div className='flex-1' onClick={() => getUserpost(user)}>
           <img 
             className='h-[170px] w-full object-cover mx-auto rounded-lg' 
-            src={`http://192.168.0.130:6001/streamId/${user.userPic}`} 
+            src={`http://localhost:6001/streamId/${user.userPic}`} 
             alt={`${user.firstname}`} 
           />
         </div>
