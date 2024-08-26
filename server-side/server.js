@@ -25,11 +25,11 @@ import { sendMessage} from './controller/message.js'
 
 const app = express();
 
-app.use(cors({ origin: ['http://localhost:5173'],credentials: true } ));
+app.use(cors({ origin: ['http://localhost:5173', 'https://social-media-1dtpqgkb2-rajat-nautiyals-projects.vercel.app'],credentials: true } ));
 const server = createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: ['http://localhost:5173'],
+    origin: ['http://localhost:5173', 'https://social-media-1dtpqgkb2-rajat-nautiyals-projects.vercel.app'],
     methods: ["GET", "POST"],
     credentials: true,
   },
