@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector,useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import {GetUserPost} from '../hooks/getUserHook.jsx'
 import { FollowUser } from '../hooks/addFriendHook.jsx';
 import { FetchProfileUser } from '../hooks/fetchFriends.jsx';
 
 export const UsersFunc = () => {
   const [users, setUsers] = useState([]);
-  const dispatch = useDispatch();
   const getUserpost = GetUserPost();
   const followUser = FollowUser(); // to add/remove friend
   const  fetchProfileUser = FetchProfileUser(); 
@@ -25,7 +23,6 @@ export const UsersFunc = () => {
       });
       const data = await res.json();
       setUsers(data);
-      // console.log(data);
     } catch (e) {
       console.log(e.message);
     }
@@ -58,7 +55,10 @@ export const UsersFunc = () => {
           />
         </div>
         <div className='mt-2 text-center'>
-          <div className='text-[18px] font-bold hover:underline' onClick={() => getUserpost(user)}>
+          <div 
+            className='text-[18px] font-bold hover:underline' 
+            onClick={() => getUserpost(user)}
+          >
             {user.firstname} {user.lastname}
           </div>
           <div className='text-[17px] text-gray-600' onClick={() => getUserpost(user)}>

@@ -2,11 +2,13 @@ import React, {useState, useEffect} from 'react'
 import { useForm } from "react-hook-form";
 import { useNavigate } from 'react-router-dom';
 import { HiPhoto } from "react-icons/hi2";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 export const Register = () => {
     const {register, handleSubmit, formState: { errors }} = useForm();
     const navigate = useNavigate();
     const [fileName, setFileName] = useState(null);
+    const [loading, setLoading] = useState(false);
 
     const handleClick =()=>{
       navigate('/login')
@@ -14,7 +16,7 @@ export const Register = () => {
     const submitRegister = async(data) => {
       try {
         const formData = new FormData();
-
+        setLoading(true)
         for (const key in data) {
           console.log(key, data[key])
             if (key === 'picture' && data[key].length > 0) {
@@ -27,7 +29,8 @@ export const Register = () => {
             method: 'POST',
             body: formData
         });
-        const responseData = await res.json();
+        await res.json();
+        setLoading(false)
         navigate('/login')
 
     } catch (error) {
@@ -108,7 +111,11 @@ export const Register = () => {
         <button type="submit"
           className="w-full bg-indigo-500 text-white py-2 rounded-lg hover:bg-indigo-600 transition duration-300 text-sm"
         >
-          Register
+          {!loading?
+            <>Register</>
+             :<div className='flex items-center justify-center animate-spin text-[18px]'>
+                <AiOutlineLoading3Quarters/>
+              </div>}
         </button>
       </form>
       <div onClick={handleClick}

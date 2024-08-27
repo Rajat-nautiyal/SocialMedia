@@ -111,7 +111,6 @@ export const login = async(req,res) =>{
 
 export const logout = async (req, res) => {
     try {
-      // Clear the JWT cookie by setting its maxAge to 0
       res.clearCookie('jwt', {
             httpOnly: true, 
             sameSite: 'None', // Allows cross-site cookies

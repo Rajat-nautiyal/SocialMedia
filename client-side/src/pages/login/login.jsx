@@ -3,12 +3,14 @@ import { useNavigate } from 'react-router-dom';
 import { useForm } from "react-hook-form";
 import { useDispatch } from 'react-redux';
 import { setLogin } from '../../state/index.jsx';
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 export const Login = () => {
     const {register, handleSubmit, formState: { errors }} = useForm();
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const [message, setMessage] = useState(null);
+    const [loading, setLoading] = useState(false);
     const [inputValue, setInputValue] = useState('demo@gmail.com');
     const [passwordValue, setPasswordValue] = useState('123456');
 
@@ -17,7 +19,7 @@ export const Login = () => {
     }
     const submitLogin = async(data) => {
       try {
-        console.log(data)
+        setLoading(true)
         const res = await fetch('https://socialera.us.to/auth/login', {
             method: 'POST',
             headers:{
@@ -27,6 +29,7 @@ export const Login = () => {
             credentials: 'include'
         });
         const logInData = await res.json();
+        setLoading(false)
         if(logInData.message){
             setMessage(logInData.message)
         }
@@ -62,7 +65,10 @@ export const Login = () => {
             <button type="submit" 
              className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition duration-300"
             >
-                Login
+                {!loading?<>Login</>
+                :<div className='flex items-center justify-center animate-spin text-[18px]'>
+                    <AiOutlineLoading3Quarters/>
+                    </div>}
             </button>
         </form>
         <div onClick={handleClick}
