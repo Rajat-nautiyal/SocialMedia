@@ -63,9 +63,9 @@ app.get('/streamId/:id',streamFileId)
 app.get('/auth/verify',authUser,getAuthUser) //persistent login
 
 app.post('/auth/register', upload.single('picture'), register);
-app.post('/post/createpost',authUser, upload.single('file'), createPost);
+app.post('/post/createpost', upload.single('file'), createPost);
 app.post('/message/send/:id',upload.single('file'),sendMessage); //friend id
-app.post('/post/story',authUser, upload.single('image'), createStory);
+app.post('/post/story', upload.single('image'), createStory);
 
 const PORT = process.env.PORT || 5000;
 
