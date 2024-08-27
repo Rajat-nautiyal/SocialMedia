@@ -25,11 +25,11 @@ import { sendMessage} from './controller/message.js'
 
 const app = express();
 app.set('trust proxy', 1);
-app.use(cors({ origin: ['http://localhost:5173', 'https://social-media-1dtpqgkb2-rajat-nautiyals-projects.vercel.app','https://socialera.us.to'],credentials: true } ));
+app.use(cors({ origin: ['http://localhost:5173', 'https://social-media-52nxfb17t-rajat-nautiyals-projects.vercel.app/','https://socialera.us.to'],credentials: true } ));
 const server = createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: ['http://localhost:5173', 'https://social-media-1dtpqgkb2-rajat-nautiyals-projects.vercel.app'],
+    origin: ['http://localhost:5173', 'https://social-media-52nxfb17t-rajat-nautiyals-projects.vercel.app/','https://socialera.us.to'],
     methods: ["GET", "POST"],
     credentials: true,
   },
