@@ -72,12 +72,13 @@ export const login = async(req,res) =>{
         if(!IsMatch) return res.status(400).json({message:'Invalid credentials'});
     
         const token = jwt.sign({id:user._id}, process.env.JWT_SECRET_KEY,{expiresIn:'1h'});
-        res.cookie('jwt',token, {
-            maxAge: 60*60*1000, //expires in 1hr
-            httpOnly: true,
-            sameSite: 'strict'
-        })
-        const creatorPic ='66cb21d180d7ebbb00f7f196';
+        res.cookie('jwt', token, {
+            maxAge: 60 * 60 * 1000, // Expires in 1 hour
+            httpOnly: true, // Prevents client-side JavaScript from accessing the cookie
+            sameSite: 'None', // Allows cross-site cookies
+            secure: true, 
+          });
+                  const creatorPic ='66cb21d180d7ebbb00f7f196';
         const welcome = 'Welcome to SocialEra, i hope your experience would be great with my website';
         const specificNotify = await Notify.findOne({notification:welcome, userId:user._id});
         let notification;
@@ -112,9 +113,9 @@ export const logout = async (req, res) => {
     try {
       // Clear the JWT cookie by setting its maxAge to 0
       res.clearCookie('jwt', {
-        httpOnly: true,
-        sameSite: 'strict',
-        secure:true
+            httpOnly: true, 
+            sameSite: 'None', // Allows cross-site cookies
+            secure: true, 
     });
       
       res.status(200).json({ message: 'Logout successful' });
