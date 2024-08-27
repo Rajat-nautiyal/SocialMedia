@@ -12,7 +12,7 @@ export const GetUserPost = ()=>{
     const getPost =async(user)=>{
       try{
         dispatch(setProfileUser(user))
-        const res = await fetch(`https://socialmedia-z9uq.onrender.com/post/${user._id}`,{
+        const res = await fetch(`https://socialera.us.to/post/${user._id}`,{
           method: 'GET',
           headers:{
             'content-type':'application/json'

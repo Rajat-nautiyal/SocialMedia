@@ -18,7 +18,7 @@ export const Login = () => {
     const submitLogin = async(data) => {
       try {
         console.log(data)
-        const res = await fetch('https://socialmedia-z9uq.onrender.com/auth/login', {
+        const res = await fetch('https://socialera.us.to/auth/login', {
             method: 'POST',
             headers:{
                 'Content-Type': 'application/json'

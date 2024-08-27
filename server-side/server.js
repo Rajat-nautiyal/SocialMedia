@@ -24,8 +24,8 @@ import {streamFile, streamFileId} from './middleware/stream.js'
 import { sendMessage} from './controller/message.js'
 
 const app = express();
-
-app.use(cors({ origin: ['http://localhost:5173', 'https://social-media-1dtpqgkb2-rajat-nautiyals-projects.vercel.app'],credentials: true } ));
+app.set('trust proxy', 1);
+app.use(cors({ origin: ['http://localhost:5173', 'https://social-media-1dtpqgkb2-rajat-nautiyals-projects.vercel.app','https://socialera.us.to'],credentials: true } ));
 const server = createServer(app);
 const io = new Server(server, {
   cors: {
@@ -37,6 +37,8 @@ const io = new Server(server, {
 
 dotenv.config();
 // const __dirname = path.resolve();
+app.set("trust proxy", 1);
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true, limit: '30mb' }));
 app.use(helmet());

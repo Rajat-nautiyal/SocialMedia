@@ -10,7 +10,7 @@ export const FollowUser = ()=>{
 
     const addFriend =async(friendId)=>{
         try{
-          const res = await fetch(`https://socialmedia-z9uq.onrender.com/users/add/${friendId}/${userId}`,{
+          const res = await fetch(`https://socialera.us.to/users/add/${friendId}/${userId}`,{
             method: 'PATCH',
             headers:{
               'content-type':'application/json'

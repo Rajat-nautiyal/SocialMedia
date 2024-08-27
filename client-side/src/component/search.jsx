@@ -20,7 +20,7 @@ export const Search = () => {
   const getUser =async(inputValue)=>{
     try{
       // console.log(user)
-      const res = await fetch(`https://socialmedia-z9uq.onrender.com/users/${inputValue}`,{
+      const res = await fetch(`https://socialera.us.to/users/${inputValue}`,{
         method: 'GET',
         headers:{
           'content-type':'application/json'
@@ -92,7 +92,7 @@ export const Search = () => {
           <div className='absolute w-[250px] p-2 bg-white flex items-center 
           rounded-xl shadow-xl '>
             <img 
-              src={`https://socialmedia-z9uq.onrender.com/streamId/${foundedUser.userPic}`} 
+              src={`https://socialera.us.to/streamId/${foundedUser.userPic}`} 
               className='w-12 h-12 rounded-full object-cover mr-3' 
               alt={`${foundedUser.firstname} ${foundedUser.lastname}`} 
             />

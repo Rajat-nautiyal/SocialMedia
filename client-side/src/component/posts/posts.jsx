@@ -18,7 +18,7 @@ export const Posts = () => {
 
   const getPosts = async()=>{
     try{
-      const res = await fetch('https://socialmedia-z9uq.onrender.com/post',{
+      const res = await fetch('https://socialera.us.to/post',{
         method: 'GET',
         headers:{
           'content-type':'application/json'

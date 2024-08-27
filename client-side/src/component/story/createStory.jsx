@@ -36,7 +36,7 @@ export const CreateStory = ({handleStory}) => {
       // console.log(file)
       if(!description&&file.size===0&&file.name==='') return;
       try {
-          const res = await fetch('https://socialmedia-z9uq.onrender.com/post/story', {
+          const res = await fetch('https://socialera.us.to/post/story', {
             method: 'POST',
             headers: { Authorization: `Bearer ${token}` },
             body: formData,
@@ -59,7 +59,7 @@ export const CreateStory = ({handleStory}) => {
     <div onClick ={()=>setCreateStory(!createStory)} 
       className={`relative ${stories[0]?`w-[30%]`:`w-[122px]`} flex items-center justify-center
       transition-all cursor-pointer overflow-x-auto max-md:h-[25vh] flex-shrink-0 hover:scale-105`}>
-      <img src={`https://socialmedia-z9uq.onrender.com/streamId/${userPic}`} 
+      <img src={`https://socialera.us.to/streamId/${userPic}`} 
         className="h-[100%] w-[100%] transition-all rounded-xl" 
         alt="create story" 
       />

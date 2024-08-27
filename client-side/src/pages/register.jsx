@@ -23,7 +23,7 @@ export const Register = () => {
                 formData.append(key, data[key]);
             }
         }
-        const res = await fetch('https://socialmedia-z9uq.onrender.com/auth/register', {
+        const res = await fetch('https://socialera.us.to/auth/register', {
             method: 'POST',
             body: formData
         });

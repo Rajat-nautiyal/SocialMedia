@@ -20,7 +20,7 @@ export const Friends = () => {
       try{
         let res;
         if(profileUser ===null){
-          res = await fetch(`https://socialmedia-z9uq.onrender.com/users/${userId}`,{
+          res = await fetch(`https://socialera.us.to/users/${userId}`,{
             method: 'GET',
             headers:{
               'content-type':'application/json'
@@ -28,7 +28,7 @@ export const Friends = () => {
             credentials: 'include', // Include cookies with the request
           })
         }else{
-          res = await fetch(`https://socialmedia-z9uq.onrender.com/users/${profileUser._id}`,{
+          res = await fetch(`https://socialera.us.to/users/${profileUser._id}`,{
             method: 'GET',
             headers:{
               'content-type':'application/json'
@@ -64,7 +64,7 @@ export const Friends = () => {
           >
             <img
               onClick={() => { getUserpost(u) }}
-              src={`https://socialmedia-z9uq.onrender.com/streamId/${u.userPic}`}
+              src={`https://socialera.us.to/streamId/${u.userPic}`}
               className='h-16 w-16 max-md:h-20 max-md:w-20 rounded-lg object-cover'
               alt={`${u.firstname} ${u.lastname}`}
             />
