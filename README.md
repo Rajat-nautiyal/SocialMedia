@@ -1,4 +1,5 @@
 # SocialMedia
-created social media site using MERN and tailwindCSS
+Created a social media site using MERN stack and Tailwind CSS.
 
-Live Link : social-media-two-zeta.vercel.app
+Live Link: https://social-media-two-zeta.vercel.app
+
