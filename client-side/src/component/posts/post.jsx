@@ -14,6 +14,7 @@ export const Post = ({ post }) => {
   const userId = useSelector((state) => state.userSlice.user._id);
   const mode = useSelector((state) => state.userSlice.mode);
   const [seeMore, setSeeMore] = useState(false);
+  const [instantLike, setInstantLike] = useState(null);
   const isLiked = Boolean(post.likes[userId]);
   const likeCount = Object.keys(post.likes).length;
   const frnds = useSelector((state) => state.userSlice.user.friends);
@@ -25,6 +26,7 @@ export const Post = ({ post }) => {
 
   const likePost = async (postId) => {
     try {
+      setInstantLike(!isLiked)
       const res = await fetch(`https://socialera.us.to/post/like/${postId}`, {
         method: "PATCH",
         headers: {
@@ -131,7 +133,7 @@ export const Post = ({ post }) => {
                 font-medium hover:cursor-pointer text-gray-500 px-[8px]"
             onClick={() => likePost(post._id)}
           >
-            {isLiked ? (
+            {isLiked || instantLike ? (
               <GoHeartFill className="text-red-500 " />
             ) : (
               <GoHeart id={mode ? "darkLike" : ""} />
