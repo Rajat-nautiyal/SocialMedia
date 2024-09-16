@@ -5,7 +5,7 @@ import {Navbar} from '../../component/navbar/navbar.jsx'
 import {Profile} from '../../component/profile.jsx'
 import {ChatUsers} from '../messages/messages.jsx'
 import {Notify} from '../notify/notify.jsx'
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 export const Users = () => {
     const isMobile = useMediaQuery('(max-width: 768px)');

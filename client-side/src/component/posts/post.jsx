@@ -27,7 +27,7 @@ export const Post = ({ post }) => {
   const likePost = async (postId) => {
     try {
       setInstantLike(!isLiked)
-      const res = await fetch(`https://socialera.us.to/post/like/${postId}`, {
+      const res = await fetch(`https://server-side-delta.vercel.app/post/like/${postId}`, {
         method: "PATCH",
         headers: {
           "content-type": "application/json",
@@ -52,7 +52,7 @@ export const Post = ({ post }) => {
         <div className="flex font-medium text-[17px] hover:cursor-pointer items-start">
           <img
             onClick={() => getUserpost(post.userId)}
-            src={`https://socialera.us.to/streamId/${post.userId.userPic}`}
+            src={`https://server-side-delta.vercel.app/streamId/${post.userId.userPic}`}
             className="post-profile-pic"
             alt="Post"
           />
@@ -113,13 +113,13 @@ export const Post = ({ post }) => {
           post.postPicturePath.contentType === "image/jpeg" ||
           post.postPicturePath.contentType === "image/webp"? (
             <img
-              src={`https://socialera.us.to/stream/${post.postPicturePath.filename}`}
+              src={`https://server-side-delta.vercel.app/stream/${post.postPicturePath.filename}`}
               className="postPic"
               alt="Post"
             />
           ) : post.postPicturePath.contentType === "video/mp4" ? (
             <video
-              src={`https://socialera.us.to/stream/${post.postPicturePath.filename}`}
+              src={`https://server-side-delta.vercel.app/stream/${post.postPicturePath.filename}`}
               className="postPic"
               controls
             ></video>

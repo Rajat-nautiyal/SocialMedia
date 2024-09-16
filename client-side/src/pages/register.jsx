@@ -25,7 +25,7 @@ export const Register = () => {
                 formData.append(key, data[key]);
             }
         }
-        const res = await fetch('https://socialera.us.to/auth/register', {
+        const res = await fetch('https://server-side-delta.vercel.app/auth/register', {
             method: 'POST',
             body: formData
         });

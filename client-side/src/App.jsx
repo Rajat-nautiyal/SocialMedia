@@ -13,7 +13,7 @@ function App(){
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        const response = await fetch('https://socialera.us.to/auth/verify', {
+        const response = await fetch('https://server-side-delta.vercel.app/auth/verify', {
           method: 'GET',
           credentials: 'include' // Include cookies in the request
         });

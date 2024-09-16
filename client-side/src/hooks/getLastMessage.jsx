@@ -6,7 +6,7 @@ export const LastMessageHook = ()=>{
     const userId = useSelector((state)=>state.userSlice.user._id);
     const getLastMessages = async () => {
         try {
-          const res = await fetch(`https://socialera.us.to/message/${userId}`, {
+          const res = await fetch(`https://server-side-delta.vercel.app/message/${userId}`, {
             method: 'GET',
             headers: {
               'content-type': 'application/json',

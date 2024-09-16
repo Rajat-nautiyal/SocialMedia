@@ -8,7 +8,7 @@ export const FetchProfileUser = () => {
     const getFriends =async()=>{
         if (profileUser === null) {
         try {
-            const response = await fetch(`https://socialera.us.to/users/${userId}`, {
+            const response = await fetch(`https://server-side-delta.vercel.app/users/${userId}`, {
             method: 'GET',
             headers: {
                 'content-type': 'application/json',

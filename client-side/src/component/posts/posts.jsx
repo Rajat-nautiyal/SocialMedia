@@ -18,7 +18,7 @@ export const Posts = () => {
 
   const getPosts = async()=>{
     try{
-      const res = await fetch('https://socialera.us.to/post',{
+      const res = await fetch('https://server-side-delta.vercel.app/post',{
         method: 'GET',
         headers:{
           'content-type':'application/json'

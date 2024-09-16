@@ -47,7 +47,7 @@ export const MobSearch = ({handleKeyDown, setInputValue, foundedUser, inputValue
           <div className='relative w-[95%] mt-4 mx-auto p-2 bg-white flex items-center 
           rounded-xl shadow-xl '>
             <img 
-              src={`https://socialera.us.to/streamId/${foundedUser.userPic}`} 
+              src={`https://server-side-delta.vercel.app/streamId/${foundedUser.userPic}`} 
               className='w-12 h-12 rounded-full object-cover mr-3' 
               alt={`${foundedUser.firstname} ${foundedUser.lastname}`} 
             />

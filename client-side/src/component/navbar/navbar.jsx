@@ -93,7 +93,7 @@ export const Navbar = () => {
 
   const handleLogout = async () => {
     try {
-      await fetch("https://socialera.us.to/auth/logout", {
+      await fetch("https://server-side-delta.vercel.app/auth/logout", {
         method: "GET",
         credentials: "include",
       });

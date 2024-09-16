@@ -7,7 +7,7 @@ export const NotifyHook = () => {
     const userId = useSelector((state)=>state.userSlice.user._id);
     const getNotify = async()=>{
         try{
-          const res = await fetch(`https://socialera.us.to/notify/${userId}`,{
+          const res = await fetch(`https://server-side-delta.vercel.app/notify/${userId}`,{
             method: 'GET',
             headers:{
               'content-type':'application/json'
@@ -32,7 +32,7 @@ export const useUpdateNotifyHook = () => {
 
   const patchNotify = async () => {
     try {
-      await fetch(`https://socialera.us.to/notify/update/${userId}`, {
+      await fetch(`https://server-side-delta.vercel.app/notify/update/${userId}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',

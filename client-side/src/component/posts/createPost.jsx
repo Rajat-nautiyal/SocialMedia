@@ -28,7 +28,7 @@ export const CreatePost = ({handleClick}) => {
         formData.append('userId',userId);
         formData.append('fullname', fullname);
        try{
-         const res = await fetch('https://socialera.us.to/post/createpost',{
+         const res = await fetch('https://server-side-delta.vercel.app/post/createpost',{
            method:'POST',
            body: formData,
            credentials: 'include', 
@@ -50,7 +50,7 @@ export const CreatePost = ({handleClick}) => {
       pb-[5px] shadow-md pt-[10px] border-[1px]'>
       <form ref={formRef} onSubmit={postData} className='w-full' >
         <div className='flex space-x-1'>
-          <img src={`https://socialera.us.to/streamId/${userPic}`} className='profile-pic'/>
+          <img src={`https://server-side-delta.vercel.app/streamId/${userPic}`} className='profile-pic'/>
           <input 
             type="text" 
             className='postInput'

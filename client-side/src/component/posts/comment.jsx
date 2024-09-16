@@ -19,7 +19,7 @@ export const Comment = ({post}) => {
     const postComment = async(e)=>{
         e.preventDefault()
         try{
-          const res = await fetch(`https://socialera.us.to/post/add/comment/${post._id}`,{
+          const res = await fetch(`https://server-side-delta.vercel.app/post/add/comment/${post._id}`,{
             method: 'PATCH',
             headers:{
               'content-type':'application/json'
@@ -39,7 +39,7 @@ export const Comment = ({post}) => {
 
       const deleteComment = async(commentId)=>{
         try{
-          const res = await fetch(`https://socialera.us.to/post/delete/comment/${post._id}`,{
+          const res = await fetch(`https://server-side-delta.vercel.app/post/delete/comment/${post._id}`,{
             method: 'PATCH',
             headers:{
               'content-type':'application/json'
@@ -96,7 +96,7 @@ export const Comment = ({post}) => {
                 <div key={index} className='mb-4' onClick={() => OnClickComment(userId._id, _id)}>
                   <div className='flex items-start mb-2'>
                     <img 
-                      src={`https://socialera.us.to/streamId/${userId.userPic}`} 
+                      src={`https://server-side-delta.vercel.app/streamId/${userId.userPic}`} 
                       className='w-10 h-10 rounded-full mr-3 object-cover' 
                       alt="Post" 
                     />

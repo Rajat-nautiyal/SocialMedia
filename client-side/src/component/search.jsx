@@ -20,7 +20,7 @@ export const Search = () => {
   const getUser =async(inputValue)=>{
     try{
       // console.log(user)
-      const res = await fetch(`https://socialera.us.to/users/${inputValue}`,{
+      const res = await fetch(`https://server-side-delta.vercel.app/users/${inputValue}`,{
         method: 'GET',
         headers:{
           'content-type':'application/json'
@@ -92,7 +92,7 @@ export const Search = () => {
           <div className='absolute w-[250px] p-2 bg-white flex items-center 
           rounded-xl shadow-xl '>
             <img 
-              src={`https://socialera.us.to/streamId/${foundedUser.userPic}`} 
+              src={`https://server-side-delta.vercel.app/streamId/${foundedUser.userPic}`} 
               className='w-12 h-12 rounded-full object-cover mr-3' 
               alt={`${foundedUser.firstname} ${foundedUser.lastname}`} 
             />

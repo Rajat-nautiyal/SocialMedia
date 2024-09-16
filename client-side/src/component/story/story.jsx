@@ -21,7 +21,7 @@ export const Story = () => {
   const dispatch = useDispatch();
   const fetchStories = async()=>{
     try{
-      const res = await fetch(`https://socialera.us.to/story`,{
+      const res = await fetch(`https://server-side-delta.vercel.app/story`,{
         method: 'GET',
         headers:{
           'content-type':'application/json'
@@ -56,14 +56,14 @@ export const Story = () => {
                   {s.description}
                 </div>:null}
                 <img 
-                    src={s.postPicturePath?`https://socialera.us.to/streamId/${s.postPicturePath}`:generalBg}
+                    src={s.postPicturePath?`https://server-side-delta.vercel.app/streamId/${s.postPicturePath}`:generalBg}
                     className="w-full h-full object-cover rounded-xl" 
                     alt="story" 
                 />
             </div>
             <div className='absolute flex flex-col w-full h-full justify-between p-2'>
               <img 
-                src={`https://socialera.us.to/streamId/${s.userId.userPic}`}
+                src={`https://server-side-delta.vercel.app/streamId/${s.userId.userPic}`}
                 className="h-[48px] w-[48px] border-[3.5px] border-blue-700 rounded-full" 
               />
               <div className='text-white text-sm'>{s.userId.firstname} {s.userId.lastname}</div>

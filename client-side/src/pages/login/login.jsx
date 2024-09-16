@@ -20,7 +20,7 @@ export const Login = () => {
     const submitLogin = async(data) => {
       try {
         setLoading(true)
-        const res = await fetch('https://socialera.us.to/auth/login', {
+        const res = await fetch('https://server-side-delta.vercel.app/auth/login', {
             method: 'POST',
             headers:{
                 'Content-Type': 'application/json'

@@ -30,7 +30,7 @@ export const ChatUsers = () => {
   }
   const getLastMessages = async () => {
     try {
-      const res = await fetch(`https://socialera.us.to/message/${userId}`, {
+      const res = await fetch(`https://server-side-delta.vercel.app/message/${userId}`, {
         method: 'GET',
         headers: {
           'content-type': 'application/json',
@@ -81,7 +81,7 @@ export const ChatUsers = () => {
       <div className="flex flex-row overflow-x-auto scrollbar-hide space-x-4 pb-4">
           <div className="flex flex-col hover:cursor-pointer items-center space-y-2">
               <img 
-                src={`https://socialera.us.to/streamId/${user.userPic}`} 
+                src={`https://server-side-delta.vercel.app/streamId/${user.userPic}`} 
                 className='h-[45px] w-[45px] hover:h-[48px] hover:w-[48px] transition-all rounded-full object-cover' 
                 alt='You'
               />
@@ -93,7 +93,7 @@ export const ChatUsers = () => {
             <div key={u._id} onClick={() => setFriend(u)}
             className="flex flex-col hover:cursor-pointer items-center space-y-2">
               <img 
-                src={`https://socialera.us.to/streamId/${u.userPic}`} 
+                src={`https://server-side-delta.vercel.app/streamId/${u.userPic}`} 
                 className='h-[45px] w-[45px] hover:h-[48px] hover:w-[48px] transition-all rounded-full object-cover' 
                 alt={`${u.firstname}`} 
               />
@@ -119,7 +119,7 @@ export const ChatUsers = () => {
                hover:bg-gray-100 transition duration-150 ease-in-out cursor-pointer"
             >
               <img
-                src={`https://socialera.us.to/streamId/${u.userPic}`}
+                src={`https://server-side-delta.vercel.app/streamId/${u.userPic}`}
                 className="h-[45px] w-[45px] rounded-full object-cover"
                 alt={`${u.firstname}`}
               />
@@ -155,7 +155,7 @@ export const ChatUsers = () => {
              hover:bg-gray-100 transition duration-150 ease-in-out cursor-pointer"
           >
             <img
-              src={`https://socialera.us.to/streamId/${u.userPic}`}
+              src={`https://server-side-delta.vercel.app/streamId/${u.userPic}`}
               className="h-[45px] w-[45px] rounded-full object-cover"
               alt={`${u.firstname}`}
             />

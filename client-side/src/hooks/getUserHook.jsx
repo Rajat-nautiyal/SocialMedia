@@ -12,7 +12,7 @@ export const GetUserPost = ()=>{
     const getPost =async(user)=>{
       try{
         dispatch(setProfileUser(user))
-        const res = await fetch(`https://socialera.us.to/post/${user._id}`,{
+        const res = await fetch(`https://server-side-delta.vercel.app/post/${user._id}`,{
           method: 'GET',
           headers:{
             'content-type':'application/json'

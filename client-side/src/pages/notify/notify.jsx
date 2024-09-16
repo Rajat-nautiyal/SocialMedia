@@ -36,7 +36,7 @@ export const Notify = () => {
           <div key={n._id} onClick={()=>{getUser(n.actionId),handleClick()}}
            className="flex items-center space-x-4 bg-white p-3 rounded-lg shadow-md">
             <img
-              src={`https://socialera.us.to/streamId/${n.actionPic}`}
+              src={`https://server-side-delta.vercel.app/streamId/${n.actionPic}`}
               className='h-[45px] w-[45px] rounded-full object-cover'
               alt='pic'
             />

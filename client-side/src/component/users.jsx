@@ -14,7 +14,7 @@ export const UsersFunc = () => {
 
   const getUsers = async () => {
     try {
-      const res = await fetch('https://socialera.us.to/users', {
+      const res = await fetch('https://server-side-delta.vercel.app/users', {
         method: 'GET',
         headers: {
           'content-type': 'application/json',
@@ -50,7 +50,7 @@ export const UsersFunc = () => {
         <div className='flex-1' onClick={() => getUserpost(user)}>
           <img 
             className='h-[170px] w-full object-cover mx-auto rounded-lg' 
-            src={`https://socialera.us.to/streamId/${user.userPic}`} 
+            src={`https://server-side-delta.vercel.app/streamId/${user.userPic}`} 
             alt={`${user.firstname}`} 
           />
         </div>

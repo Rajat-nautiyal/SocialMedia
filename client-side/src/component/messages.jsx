@@ -32,7 +32,7 @@ export const Messages = ({ friend, handleClick }) => {
 
   const sendMessages = async () => {
     try {
-      const res = await fetch(`https://socialera.us.to/message/send/${friend._id}`, {
+      const res = await fetch(`https://server-side-delta.vercel.app/message/send/${friend._id}`, {
         method: 'POST',
         headers: {
           'content-type': 'application/json'
@@ -60,7 +60,7 @@ export const Messages = ({ friend, handleClick }) => {
 
   const getMessages = async () => {
     try {
-      const res = await fetch(`https://socialera.us.to/message/${userId}/${friend._id}`, {
+      const res = await fetch(`https://server-side-delta.vercel.app/message/${userId}/${friend._id}`, {
         method: 'GET',
         headers: {
           'content-type': 'application/json'
@@ -113,7 +113,7 @@ export const Messages = ({ friend, handleClick }) => {
           <IoArrowBackSharp />
         </div>
         <img
-          src={`https://socialera.us.to/streamId/${friend.userPic}`}
+          src={`https://server-side-delta.vercel.app/streamId/${friend.userPic}`}
           className="h-[45px] w-[45px] rounded-full object-cover"
           alt="pic"
         />
@@ -133,7 +133,7 @@ export const Messages = ({ friend, handleClick }) => {
           m.message ?
             <div key={index} className={`flex items-start  space-x-2 ${m.senderId === userId ? 'justify-end' : 'justify-start'}`}>
               {bool?<img
-                src={m.senderId === userId ? `https://socialera.us.to/streamId/${user.userPic}` : `https://socialera.us.to/streamId/${friend.userPic}`}
+                src={m.senderId === userId ? `https://server-side-delta.vercel.app/streamId/${user.userPic}` : `https://server-side-delta.vercel.app/streamId/${friend.userPic}`}
                 className="h-[38px] w-[38px] rounded-full object-cover"
                 alt="User"
               />:null}
